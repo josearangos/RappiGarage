@@ -20,6 +20,11 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Requestes
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+
     implementation 'com.cepheuen.elegant-number-button:lib:1.0.2'
     implementation 'com.github.JesusM:HoloCircleSeekBar:v2.2.2'
 

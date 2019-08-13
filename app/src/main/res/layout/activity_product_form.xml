@@ -7,388 +7,436 @@
     android:orientation="vertical"
     tools:context=".Product.Publish.ProductFormActivity">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:layout_height="match_parent">
 
-        <include android:id="@+id/toolbar"
-            layout="@layout/tool_bar"/>
 
         <LinearLayout
-            android:weightSum="1"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <LinearLayout
-                android:gravity="center"
-                android:layout_weight="0.1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@android:drawable/ic_menu_camera"
-                    />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
 
-            </LinearLayout>
+            <include android:id="@+id/toolbar"
+                layout="@layout/tool_bar"/>
+
             <LinearLayout
-                android:padding="12dp"
-                android:layout_weight="0.9"
+                android:weightSum="1"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:textSize="22dp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/price"
-                    />
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:layout_height="wrap_content">
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/price"
-                        android:inputType="numberDecimal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/price"
-                        />
-                </android.support.design.widget.TextInputLayout>
-
-                <TextView
-                    android:layout_marginTop="10dp"
-                    android:textSize="22dp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/detail"
-                    />
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:layout_height="wrap_content">
-
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/name"
-                        />
-                </android.support.design.widget.TextInputLayout>
-
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="200"
-                    android:orientation="vertical"
-                    android:layout_height="wrap_content">
-
-                    <android.support.design.widget.TextInputEditText
-                        android:id="@+id/description"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/Qdescription"
-                        />
-                </android.support.design.widget.TextInputLayout>
-
-                <TextView
-                    android:textSize="16dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/availableQuantity"
-                    />
-
-                <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
-                    app:initialNumber="1"
-                    android:layout_width="match_parent"
-                    android:id="@+id/availableQuantity"
-                    android:layout_centerVertical="true"
-                    android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:layout_marginBottom="10dp"
-                    android:textSize="16dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/warranty"
-                    />
-                <android.support.design.chip.ChipGroup
-                    android:layout_width="match_parent"
-                    app:singleSelection="true"
-                    android:layout_height="wrap_content">
-
-                    <android.support.design.chip.Chip
-                        android:textColor="@color/colorSecundary"
-                        app:chipBackgroundColor="@color/colorPrimary"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="3 Meses"
-                        app:closeIconVisible="false"
-                        style="@style/Widget.MaterialComponents.Chip.Entry"
-                        />
-                    <android.support.design.chip.Chip
-                        android:textColor="@color/colorSecundary"
-                        app:chipBackgroundColor="@color/colorPrimary"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="6 meses"
-                        app:closeIconVisible="false"
-                        style="@style/Widget.MaterialComponents.Chip.Entry"
-                        />
-                    <android.support.design.chip.Chip
-                        android:textColor="@color/colorSecundary"
-                        app:chipBackgroundColor="@color/colorPrimary"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="12 meses"
-                        app:closeIconVisible="false"
-                        style="@style/Widget.MaterialComponents.Chip.Entry"
-                        />
-                </android.support.design.chip.ChipGroup>
-
-
-                <TextView
-                    android:layout_marginTop="10dp"
-
-                    android:textSize="16dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/condition"
-                    />
-
+                android:layout_height="match_parent">
                 <LinearLayout
-                    android:padding="10dp"
+                    android:gravity="center"
+                    android:layout_weight="0.1"
                     android:layout_width="match_parent"
-                    android:orientation="horizontal"
                     android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@android:drawable/ic_menu_camera"
+                        />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:padding="12dp"
+                    android:layout_weight="0.9"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:textSize="22dp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/price"
+                        />
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/price"
+                            android:inputType="numberDecimal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/price"
+                            />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:textSize="22dp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detail"
+                        />
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/name"
+                            />
+                    </android.support.design.widget.TextInputLayout>
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="200"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/description"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/Qdescription"
+                            />
+
+
+                    </android.support.design.widget.TextInputLayout>
+
                     <TextView
                         android:textSize="16dp"
                         android:layout_marginBottom="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/Pnew"
+                        android:text="@string/availableQuantity"
                         />
-                    <Switch
 
-                        android:id="@+id/condition"
+                    <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+                        app:initialNumber="1"
+                        android:layout_width="match_parent"
+                        android:id="@+id/availableQuantity"
+                        android:layout_centerVertical="true"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:layout_marginBottom="10dp"
+                        android:textSize="16dp"
+                        android:layout_marginTop="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textOn="@string/Pnew"
-                        android:textOff="@string/Pused"
+                        android:text="@string/warranty"
                         />
+                    <android.support.design.chip.ChipGroup
+                        android:id="@+id/tagGroup_categories"
+                        android:layout_width="match_parent"
+                        app:singleSelection="true"
+                        android:layout_height="wrap_content">
+
+                        <!--
+
+                        <android.support.design.chip.Chip
+                            android:textColor="@color/colorSecundary"
+                            app:chipBackgroundColor="@color/colorPrimary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="3 Meses"
+                            app:closeIconVisible="false"
+                            style="@style/Widget.MaterialComponents.Chip.Entry"
+                            />
+                        <android.support.design.chip.Chip
+                            android:textColor="@color/colorSecundary"
+                            app:chipBackgroundColor="@color/colorPrimary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="6 meses"
+                            app:closeIconVisible="false"
+                            style="@style/Widget.MaterialComponents.Chip.Entry"
+                            />
+                        <android.support.design.chip.Chip
+                            android:textColor="@color/colorSecundary"
+                            app:chipBackgroundColor="@color/colorPrimary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="12 meses"
+                            app:closeIconVisible="false"
+                            style="@style/Widget.MaterialComponents.Chip.Entry"
+                            />
+
+
+
+                        -->
+                    </android.support.design.chip.ChipGroup>
+
+
                     <TextView
+                        android:layout_marginTop="10dp"
+
                         android:textSize="16dp"
                         android:layout_marginBottom="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/Pused"
+                        android:text="@string/condition"
                         />
+
+                    <LinearLayout
+                        android:padding="10dp"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textSize="16dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Pnew"
+                            />
+                        <Switch
+
+                            android:id="@+id/condition"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textOn="@string/Pnew"
+                            android:textOff="@string/Pused"
+                            />
+                        <TextView
+                            android:textSize="16dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/Pused"
+                            />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_margin="10dp"
+                        android:textSize="22dp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/categories"
+                        />
+
+                    <android.support.design.chip.ChipGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <android.support.design.chip.Chip
+                            android:textColor="@color/colorSecundary"
+                            app:chipBackgroundColor="@color/colorPrimary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Moda"
+                            app:closeIconVisible="false"
+                            style="@style/Widget.MaterialComponents.Chip.Entry"
+                            />
+                        <android.support.design.chip.Chip
+                            android:textColor="@color/colorSecundary"
+                            app:chipBackgroundColor="@color/colorPrimary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ropa"
+                            app:closeIconVisible="false"
+                            style="@style/Widget.MaterialComponents.Chip.Entry"
+                            />
+                        <android.support.design.chip.Chip
+                            android:textColor="@color/colorSecundary"
+                            app:chipBackgroundColor="@color/colorPrimary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tecnología"
+                            app:closeIconVisible="false"
+                            style="@style/Widget.MaterialComponents.Chip.Entry"
+                            />
+
+                    </android.support.design.chip.ChipGroup>
+
+                    <TextView
+                        android:layout_margin="10dp"
+                        android:textSize="22dp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/measures"
+                        />
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <LinearLayout
+                            android:gravity="left"
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="200dp">
+                            <LinearLayout
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:textSize="14dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/width"
+                                    />
+                                <com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar
+                                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                                    android:layout_centerInParent="true"
+                                    android:id="@+id/picker"
+                                    android:layout_height="match_parent"
+                                    android:layout_width="wrap_content"
+                                    app:max="100"
+                                    app:show_text="true"
+                                    app:pointer_color="@color/tomato"
+                                    app:pointer_halo_color="@color/tomato"
+                                    app:pointer_size="12dp"
+                                    app:text_color="@color/colorPrimary"
+                                    app:text_size="12sp"
+                                    app:wheel_active_color="@color/greenLight"
+                                    app:wheel_unactive_color="@color/pink"/>
+
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:textSize="14dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/heigth"
+                                    />
+                                <com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar
+                                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                                    android:layout_centerInParent="true"
+                                    android:id="@+id/picker2"
+                                    android:layout_height="match_parent"
+                                    android:layout_width="wrap_content"
+                                    app:max="100"
+                                    app:show_text="true"
+                                    app:pointer_color="@color/tomato"
+                                    app:pointer_halo_color="@color/tomato"
+                                    app:pointer_size="12dp"
+                                    app:text_color="@color/colorPrimary"
+                                    app:text_size="12sp"
+                                    app:wheel_active_color="@color/greenLight"
+                                    app:wheel_unactive_color="@color/pink"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:gravity="left"
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="200dp">
+                            <LinearLayout
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:textSize="14dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/large"
+                                    />
+                                <com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar
+                                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                                    android:layout_centerInParent="true"
+                                    android:id="@+id/picker3"
+                                    android:layout_height="match_parent"
+                                    android:layout_width="wrap_content"
+                                    app:max="100"
+                                    app:show_text="true"
+                                    app:pointer_color="@color/tomato"
+                                    app:pointer_halo_color="@color/tomato"
+                                    app:pointer_size="12dp"
+                                    app:text_color="@color/colorPrimary"
+                                    app:text_size="12sp"
+                                    app:wheel_active_color="@color/greenLight"
+                                    app:wheel_unactive_color="@color/pink"/>
+
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:textSize="14dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/weigth"
+                                    />
+                                <com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar
+                                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                                    android:layout_centerInParent="true"
+                                    android:id="@+id/picker4"
+                                    android:layout_height="match_parent"
+                                    android:layout_width="wrap_content"
+                                    app:max="100"
+                                    app:show_text="true"
+                                    app:pointer_color="@color/tomato"
+                                    app:pointer_halo_color="@color/tomato"
+                                    app:pointer_size="12dp"
+                                    app:text_color="@color/colorPrimary"
+                                    app:text_size="12sp"
+                                    app:wheel_active_color="@color/greenLight"
+                                    app:wheel_unactive_color="@color/pink"/>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+
+                    <TextView
+                        android:textSize="22dp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/location"
+                        />
+
+                    <android.support.design.button.MaterialButton
+                        android:id="@+id/publishBtn"
+                        android:layout_height="wrap_content"
+                        android:text="@string/publish"
+                        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                        android:layout_width="match_parent" />
+
+
+
                 </LinearLayout>
-
-                <TextView
-                    android:layout_margin="10dp"
-                    android:textSize="22dp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/categories"
-                    />
-
-                <android.support.design.chip.ChipGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <android.support.design.chip.Chip
-                        android:textColor="@color/colorSecundary"
-                        app:chipBackgroundColor="@color/colorPrimary"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Moda"
-                        app:closeIconVisible="false"
-                        style="@style/Widget.MaterialComponents.Chip.Entry"
-                        />
-                    <android.support.design.chip.Chip
-                        android:textColor="@color/colorSecundary"
-                        app:chipBackgroundColor="@color/colorPrimary"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ropa"
-                        app:closeIconVisible="false"
-                        style="@style/Widget.MaterialComponents.Chip.Entry"
-                        />
-                    <android.support.design.chip.Chip
-                        android:textColor="@color/colorSecundary"
-                        app:chipBackgroundColor="@color/colorPrimary"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Tecnología"
-                        app:closeIconVisible="false"
-                        style="@style/Widget.MaterialComponents.Chip.Entry"
-                        />
-
-                </android.support.design.chip.ChipGroup>
-
-                <TextView
-                    android:layout_margin="10dp"
-                    android:textSize="22dp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/measures"
-                    />
-                <LinearLayout
-                    android:gravity="left"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="98dp">
-                    <LinearLayout
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent">
-                        <TextView
-                            android:textSize="14dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/width"
-                            />
-                        <com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:layout_centerInParent="true"
-                            android:id="@+id/picker"
-                            android:layout_height="match_parent"
-                            android:layout_width="wrap_content"
-                            app:max="100"
-                            app:show_text="true"
-                            app:pointer_color="@color/tomato"
-                            app:pointer_halo_color="@color/tomato"
-                            app:pointer_size="12dp"
-                            app:text_color="@color/colorPrimary"
-                            app:text_size="12sp"
-                            app:wheel_active_color="@color/greenLight"
-                            app:wheel_unactive_color="@color/pink"/>
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:textSize="14dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/heigth"
-                            />
-                        <com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:layout_centerInParent="true"
-                            android:id="@+id/picker2"
-                            android:layout_height="match_parent"
-                            android:layout_width="wrap_content"
-                            app:max="100"
-                            app:show_text="true"
-                            app:pointer_color="@color/tomato"
-                            app:pointer_halo_color="@color/tomato"
-                            app:pointer_size="12dp"
-                            app:text_color="@color/colorPrimary"
-                            app:text_size="12sp"
-                            app:wheel_active_color="@color/greenLight"
-                            app:wheel_unactive_color="@color/pink"/>
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:textSize="14dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/large"
-                            />
-                        <com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:layout_centerInParent="true"
-                            android:id="@+id/picker3"
-                            android:layout_height="match_parent"
-                            android:layout_width="wrap_content"
-                            app:max="100"
-                            app:show_text="true"
-                            app:pointer_color="@color/tomato"
-                            app:pointer_halo_color="@color/tomato"
-                            app:pointer_size="12dp"
-                            app:text_color="@color/colorPrimary"
-                            app:text_size="12sp"
-                            app:wheel_active_color="@color/greenLight"
-                            app:wheel_unactive_color="@color/pink"/>
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:textSize="14dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/weigth"
-                            />
-                        <com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:layout_centerInParent="true"
-                            android:id="@+id/picker4"
-                            android:layout_height="match_parent"
-                            android:layout_width="wrap_content"
-                            app:max="100"
-                            app:show_text="true"
-                            app:pointer_color="@color/tomato"
-                            app:pointer_halo_color="@color/tomato"
-                            app:pointer_size="12dp"
-                            app:text_color="@color/colorPrimary"
-                            app:text_size="12sp"
-                            app:wheel_active_color="@color/greenLight"
-                            app:wheel_unactive_color="@color/pink"/>
-
-                    </LinearLayout>
-
-
-
-
-                </LinearLayout>
-
-
-                <TextView
-                    android:textSize="22dp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/location"
-                    />
-
 
 
             </LinearLayout>
+
 
 
         </LinearLayout>
 
+        <ProgressBar
+            android:layout_gravity="center"
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
 
-
-    </LinearLayout>
 
 </ScrollView>
