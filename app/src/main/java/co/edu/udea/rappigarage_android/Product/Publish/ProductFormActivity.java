@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import co.edu.udea.rappigarage_android.R;
-import me.gujun.android.taggroup.TagGroup;
 
 public class ProductFormActivity extends AppCompatActivity {
 
@@ -30,8 +29,6 @@ public class ProductFormActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        TagGroup mTagGroup =findViewById(R.id.tag_group);
-        mTagGroup.setTags(new String[]{"3 Meses", "6 meses", "12 meses"});
     }
 
 

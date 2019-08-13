@@ -40,6 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
+                    android:layout_gravity="center"
                     android:layout_marginTop="10dp"
                     android:textSize="22dp"
                     android:textStyle="bold"
@@ -108,6 +109,7 @@
                     />
 
                 <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+                    app:initialNumber="1"
                     android:layout_width="match_parent"
                     android:id="@+id/availableQuantity"
                     android:layout_centerVertical="true"
@@ -121,16 +123,40 @@
                     android:layout_height="wrap_content"
                     android:text="@string/warranty"
                     />
-
-
-                <me.gujun.android.taggroup.TagGroup
-                    app:atg_textSize="15sp"
-                    app:atg_backgroundColor="@color/colorPrimary"
-                    app:atg_textColor="@color/colorSecundary"
+                <android.support.design.chip.ChipGroup
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tag_group"
-                    style="@style/TagGroup"/>
+                    app:singleSelection="true"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.chip.Chip
+                        android:textColor="@color/colorSecundary"
+                        app:chipBackgroundColor="@color/colorPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3 Meses"
+                        app:closeIconVisible="false"
+                        style="@style/Widget.MaterialComponents.Chip.Entry"
+                        />
+                    <android.support.design.chip.Chip
+                        android:textColor="@color/colorSecundary"
+                        app:chipBackgroundColor="@color/colorPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="6 meses"
+                        app:closeIconVisible="false"
+                        style="@style/Widget.MaterialComponents.Chip.Entry"
+                        />
+                    <android.support.design.chip.Chip
+                        android:textColor="@color/colorSecundary"
+                        app:chipBackgroundColor="@color/colorPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12 meses"
+                        app:closeIconVisible="false"
+                        style="@style/Widget.MaterialComponents.Chip.Entry"
+                        />
+                </android.support.design.chip.ChipGroup>
+
 
                 <TextView
                     android:layout_marginTop="10dp"
@@ -172,7 +198,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:layout_marginTop="10dp"
+                    android:layout_margin="10dp"
                     android:textSize="22dp"
                     android:textStyle="bold"
                     android:layout_width="wrap_content"
@@ -180,9 +206,170 @@
                     android:text="@string/categories"
                     />
 
+                <android.support.design.chip.ChipGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.design.chip.Chip
+                        android:textColor="@color/colorSecundary"
+                        app:chipBackgroundColor="@color/colorPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Moda"
+                        app:closeIconVisible="false"
+                        style="@style/Widget.MaterialComponents.Chip.Entry"
+                        />
+                    <android.support.design.chip.Chip
+                        android:textColor="@color/colorSecundary"
+                        app:chipBackgroundColor="@color/colorPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ropa"
+                        app:closeIconVisible="false"
+                        style="@style/Widget.MaterialComponents.Chip.Entry"
+                        />
+                    <android.support.design.chip.Chip
+                        android:textColor="@color/colorSecundary"
+                        app:chipBackgroundColor="@color/colorPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tecnología"
+                        app:closeIconVisible="false"
+                        style="@style/Widget.MaterialComponents.Chip.Entry"
+                        />
+
+                </android.support.design.chip.ChipGroup>
+
+                <TextView
+                    android:layout_margin="10dp"
+                    android:textSize="22dp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/measures"
+                    />
+                <LinearLayout
+                    android:gravity="left"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="98dp">
+                    <LinearLayout
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:textSize="14dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/width"
+                            />
+                        <com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:layout_centerInParent="true"
+                            android:id="@+id/picker"
+                            android:layout_height="match_parent"
+                            android:layout_width="wrap_content"
+                            app:max="100"
+                            app:show_text="true"
+                            app:pointer_color="@color/tomato"
+                            app:pointer_halo_color="@color/tomato"
+                            app:pointer_size="12dp"
+                            app:text_color="@color/colorPrimary"
+                            app:text_size="12sp"
+                            app:wheel_active_color="@color/greenLight"
+                            app:wheel_unactive_color="@color/pink"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textSize="14dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/heigth"
+                            />
+                        <com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:layout_centerInParent="true"
+                            android:id="@+id/picker2"
+                            android:layout_height="match_parent"
+                            android:layout_width="wrap_content"
+                            app:max="100"
+                            app:show_text="true"
+                            app:pointer_color="@color/tomato"
+                            app:pointer_halo_color="@color/tomato"
+                            app:pointer_size="12dp"
+                            app:text_color="@color/colorPrimary"
+                            app:text_size="12sp"
+                            app:wheel_active_color="@color/greenLight"
+                            app:wheel_unactive_color="@color/pink"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textSize="14dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/large"
+                            />
+                        <com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:layout_centerInParent="true"
+                            android:id="@+id/picker3"
+                            android:layout_height="match_parent"
+                            android:layout_width="wrap_content"
+                            app:max="100"
+                            app:show_text="true"
+                            app:pointer_color="@color/tomato"
+                            app:pointer_halo_color="@color/tomato"
+                            app:pointer_size="12dp"
+                            app:text_color="@color/colorPrimary"
+                            app:text_size="12sp"
+                            app:wheel_active_color="@color/greenLight"
+                            app:wheel_unactive_color="@color/pink"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textSize="14dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/weigth"
+                            />
+                        <com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:layout_centerInParent="true"
+                            android:id="@+id/picker4"
+                            android:layout_height="match_parent"
+                            android:layout_width="wrap_content"
+                            app:max="100"
+                            app:show_text="true"
+                            app:pointer_color="@color/tomato"
+                            app:pointer_halo_color="@color/tomato"
+                            app:pointer_size="12dp"
+                            app:text_color="@color/colorPrimary"
+                            app:text_size="12sp"
+                            app:wheel_active_color="@color/greenLight"
+                            app:wheel_unactive_color="@color/pink"/>
+
+                    </LinearLayout>
 
 
 
+
+                </LinearLayout>
 
 
                 <TextView
