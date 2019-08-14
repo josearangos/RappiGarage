@@ -131,19 +131,15 @@
                         android:text="@string/warranty"
                         />
                     <android.support.design.chip.ChipGroup
-                        android:id="@+id/tagGroup_categories"
                         android:layout_width="match_parent"
-                        app:singleSelection="true"
                         android:layout_height="wrap_content">
-
-                        <!--
 
                         <android.support.design.chip.Chip
                             android:textColor="@color/colorSecundary"
                             app:chipBackgroundColor="@color/colorPrimary"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="3 Meses"
+                            android:text="3 meses"
                             app:closeIconVisible="false"
                             style="@style/Widget.MaterialComponents.Chip.Entry"
                             />
@@ -166,10 +162,8 @@
                             style="@style/Widget.MaterialComponents.Chip.Entry"
                             />
 
-
-
-                        -->
                     </android.support.design.chip.ChipGroup>
+
 
 
                     <TextView
@@ -220,39 +214,18 @@
                         android:text="@string/categories"
                         />
 
+
+
                     <android.support.design.chip.ChipGroup
+                        android:id="@+id/tagGroup_categories"
                         android:layout_width="match_parent"
+                        app:singleSelection="true"
                         android:layout_height="wrap_content">
 
-                        <android.support.design.chip.Chip
-                            android:textColor="@color/colorSecundary"
-                            app:chipBackgroundColor="@color/colorPrimary"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Moda"
-                            app:closeIconVisible="false"
-                            style="@style/Widget.MaterialComponents.Chip.Entry"
-                            />
-                        <android.support.design.chip.Chip
-                            android:textColor="@color/colorSecundary"
-                            app:chipBackgroundColor="@color/colorPrimary"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Ropa"
-                            app:closeIconVisible="false"
-                            style="@style/Widget.MaterialComponents.Chip.Entry"
-                            />
-                        <android.support.design.chip.Chip
-                            android:textColor="@color/colorSecundary"
-                            app:chipBackgroundColor="@color/colorPrimary"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Tecnología"
-                            app:closeIconVisible="false"
-                            style="@style/Widget.MaterialComponents.Chip.Entry"
-                            />
 
                     </android.support.design.chip.ChipGroup>
+
+
 
                     <TextView
                         android:layout_margin="10dp"
@@ -411,6 +384,15 @@
                         android:layout_height="wrap_content"
                         android:text="@string/location"
                         />
+
+                    <fragment
+                        android:id="@+id/autoCompleteFragmentLocation"
+                        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+
+
 
                     <android.support.design.button.MaterialButton
                         android:id="@+id/publishBtn"

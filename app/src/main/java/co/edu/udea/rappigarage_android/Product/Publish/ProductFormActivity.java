@@ -1,6 +1,7 @@
 package co.edu.udea.rappigarage_android.Product.Publish;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.button.MaterialButton;
 import android.support.design.chip.Chip;
 import android.support.design.chip.ChipGroup;
@@ -15,19 +16,35 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.internal.ei;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar;
 
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import co.edu.udea.rappigarage_android.GlobalServices.Category.Category;
 import co.edu.udea.rappigarage_android.R;
 
-public class ProductFormActivity extends AppCompatActivity implements IProductForm.IView , View.OnClickListener {
+public class ProductFormActivity extends AppCompatActivity implements IProductForm.IView   {
 
     HashMap<String,Integer> categoriesList;
 
+    String morcilla ="";
+    PlacesClient placesClient;
     //Views
     private ChipGroup tagGroup_categories;
     private Toolbar toolbar;
@@ -58,6 +75,7 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
         initializeViews();
         this.presenter = new ProductFormPresenter(this);
         this.presenter.getCategories();
+        settingGooglePlaces();
 
     }
 
@@ -149,8 +167,31 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
         return this.categoriesList.get(name);
     }
 
-    @Override
-    public void onClick(View v) {
+    public void settingGooglePlaces(){
+        if(!Places.isInitialized()){
+            Places.initialize(getApplicationContext(),morcilla);
+        }
+        placesClient = Places.createClient(this);
+        final AutocompleteSupportFragment autocompleteSupportFragment =
+                (AutocompleteSupportFragment)getSupportFragmentManager().findFragmentById(R.id.autoCompleteFragmentLocation);
+        autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.NAME,Place.Field.LAT_LNG,Place.Field.NAME));
+        autocompleteSupportFragment.setHint("Buscar lugar");
+        autocompleteSupportFragment.setText("Asociacion Universitaria de Antioquia AUDEA");
+        autocompleteSupportFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(@NonNull Place place) {
+
+            }
+
+            @Override
+            public void onError(@NonNull Status status) {
+
+            }
+        });
 
     }
+
+
+
+
 }
