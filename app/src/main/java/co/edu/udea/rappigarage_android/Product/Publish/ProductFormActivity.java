@@ -1,7 +1,12 @@
 package co.edu.udea.rappigarage_android.Product.Publish;
 
+import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.button.MaterialButton;
 import android.support.design.chip.Chip;
 import android.support.design.chip.ChipGroup;
@@ -11,12 +16,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.Toast;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -31,13 +40,28 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar;
 
+
+import java.io.IOException;
 import java.nio.FloatBuffer;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import co.edu.udea.rappigarage_android.GlobalServices.Category.Category;
+import co.edu.udea.rappigarage_android.Product.Publish.API.Location;
+import co.edu.udea.rappigarage_android.Product.Publish.API.Measures;
+import co.edu.udea.rappigarage_android.Product.Publish.API.Photo;
+import co.edu.udea.rappigarage_android.Product.Publish.API.Product;
+import co.edu.udea.rappigarage_android.Product.Publish.API.ProductResponse;
 import co.edu.udea.rappigarage_android.R;
+
 
 public class ProductFormActivity extends AppCompatActivity implements IProductForm.IView   {
 
@@ -45,18 +69,37 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
 
     String morcilla ="";
     PlacesClient placesClient;
+    Double latitude,longitude =0.0;
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
     //Views
-    private ChipGroup tagGroup_categories;
+    private  Button location;
+    private ChipGroup tagGroup_categories,warranty;
     private Toolbar toolbar;
     private TextInputEditText price;
     private TextInputEditText name;
     private TextInputEditText description;
     private ElegantNumberButton availableQuantity;
     private Switch condition;
-    private HoloCircleSeekBar picker;
-    private HoloCircleSeekBar picker2;
-    private HoloCircleSeekBar picker3;
-    private HoloCircleSeekBar picker4;
+    private HoloCircleSeekBar pickerWidth;
+    private HoloCircleSeekBar pickerHeigth;
+    private HoloCircleSeekBar pickerLarge;
+    private HoloCircleSeekBar pickerWeigth;
     private ProgressBar progressBar;
     private MaterialButton publishBtn;
 
@@ -76,6 +119,8 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
         this.presenter = new ProductFormPresenter(this);
         this.presenter.getCategories();
         settingGooglePlaces();
+
+
 
     }
 
@@ -106,16 +151,20 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
 
         //Initialice views
         this.progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        this.picker4 = (HoloCircleSeekBar) findViewById(R.id.picker4);
-        this.picker3 = (HoloCircleSeekBar) findViewById(R.id.picker3);
-        this.picker2 = (HoloCircleSeekBar) findViewById(R.id.picker2);
-        this.picker = (HoloCircleSeekBar) findViewById(R.id.picker);
+        this.pickerWidth = (HoloCircleSeekBar) findViewById(R.id.pickerWidth);
+        this.pickerHeigth = (HoloCircleSeekBar) findViewById(R.id.pickerHeigth);
+        this.pickerLarge = (HoloCircleSeekBar) findViewById(R.id.pickerLarge);
+        this.pickerWeigth = (HoloCircleSeekBar) findViewById(R.id.pickerWeigth);
         this.condition = (Switch) findViewById(R.id.condition);
         this.availableQuantity = (ElegantNumberButton) findViewById(R.id.availableQuantity);
         this.description = (TextInputEditText) findViewById(R.id.description);
         this.name = (TextInputEditText) findViewById(R.id.name);
         this.price = (TextInputEditText) findViewById(R.id.price);
         this.toolbar = findViewById(R.id.toolbar);
+
+        //warranty
+        this.warranty = findViewById(R.id.warranty);
+
 
         //Categories group
         this.tagGroup_categories = findViewById(R.id.tagGroup_categories);
@@ -133,13 +182,17 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
 
                 }
                 //imprimo los ids de las categorias seleccionadas
-                //Toast.makeText(getApplicationContext(),String.valueOf(tagsCheckedId.toString()),Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(getApplicationContext(),String.valueOf(tagsCheckedId.toString()),Toast.LENGTH_SHORT).show();
+                //PUBLICAR PRODUCTO SIN IMAGEN
+                publishProduct();
             }
         });
 
 
     }
+
+
+
 
     @Override
     public void getCategories(ArrayList<Category> categories) {
@@ -163,6 +216,61 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
 
     }
 
+
+    public String getTextWarrantyProduct(ChipGroup chipGroup){
+        String warrantyProduct = "";
+
+        for (int i=0; i<chipGroup.getChildCount();i++){
+            Chip chip =(Chip)chipGroup.getChildAt(i);
+            if(chip.isChecked()){
+                warrantyProduct = String.valueOf(chip.getText());
+            }
+
+        }
+        return warrantyProduct;
+    }
+
+
+    @Override
+    public void publishProduct() {
+        List< Photo> photos = new ArrayList<Photo>();
+        Location location = new Location(getLatitude(),getLongitude());
+        Measures measures =new Measures(this.pickerWidth.getValue(),this.pickerHeigth.getValue(),this.pickerWeigth.getValue(),this.pickerLarge.getValue());
+        photos.add(new Photo("https://avatars0.githubusercontent.com/u/13352055?s=460&v=4"));
+
+
+        Product product = new Product(
+                Double.valueOf(this.price.getText().toString()),
+                this.name.getText().toString(),
+                this.description.getText().toString(),
+                Integer.valueOf(this.availableQuantity.getNumber()),
+                getTextWarrantyProduct(this.warranty),
+                getCurrentUTC(),
+                true,
+                measures,
+                3,
+                1,
+                condition(),
+                location,
+                photos);
+
+        this.presenter.publishProduct(product);
+    }
+
+    public String getCurrentUTC(){
+
+        TimeZone tz = TimeZone.getTimeZone("UTC");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'"); // Quoted "Z" to indicate UTC, no timezone offset
+        df.setTimeZone(tz);
+        String nowAsISO = df.format(new Date());
+        return nowAsISO;
+    }
+
+    @Override
+    public void publishProductResponse(ProductResponse productResponse) {
+        Toast.makeText(getApplicationContext(),String.valueOf(productResponse.getId()),Toast.LENGTH_LONG).show();
+    }
+
     public Integer getIdCategory(String name){
         return this.categoriesList.get(name);
     }
@@ -174,12 +282,22 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
         placesClient = Places.createClient(this);
         final AutocompleteSupportFragment autocompleteSupportFragment =
                 (AutocompleteSupportFragment)getSupportFragmentManager().findFragmentById(R.id.autoCompleteFragmentLocation);
-        autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.NAME,Place.Field.LAT_LNG,Place.Field.NAME));
+        autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.NAME,Place.Field.LAT_LNG));
         autocompleteSupportFragment.setHint("Buscar lugar");
-        autocompleteSupportFragment.setText("Asociacion Universitaria de Antioquia AUDEA");
+        autocompleteSupportFragment.setCountry("CO");
+
         autocompleteSupportFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NonNull Place place) {
+
+                try {
+                    setLatitude(place.getLatLng().latitude);
+                    setLongitude(place.getLatLng().longitude);
+                    String city = getCityNameByCoordinates(place.getLatLng().latitude,place.getLatLng().longitude);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
 
             }
 
@@ -189,6 +307,25 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
             }
         });
 
+    }
+
+
+
+    public String getCityNameByCoordinates(double lat, double lon) throws IOException {
+        Geocoder mGeocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+        List<Address> addresses = mGeocoder.getFromLocation(lat, lon, 1);
+        if (addresses != null && addresses.size() > 0) {
+            return addresses.get(0).getLocality();
+        }
+        return null;
+    }
+
+    public String condition(){
+        if(this.condition.isChecked()){
+            return "Used";
+        }else{
+            return "New";
+        }
     }
 
 

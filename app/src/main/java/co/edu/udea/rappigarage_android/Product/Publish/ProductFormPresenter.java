@@ -4,15 +4,17 @@ import java.util.ArrayList;
 
 import co.edu.udea.rappigarage_android.GlobalServices.Category.Category;
 import co.edu.udea.rappigarage_android.GlobalServices.Category.ICategoryImplement;
+import co.edu.udea.rappigarage_android.Product.Publish.API.Product;
+import co.edu.udea.rappigarage_android.Product.Publish.API.ProductResponse;
 
-public class ProductFormPresenter implements IProductForm.IPresenter ,IProductForm.CompleteListenerCategories {
+public class ProductFormPresenter implements IProductForm.IPresenter ,IProductForm.CompleteListenerCategories, IProductForm.CompleteListenerPublish {
 
     IProductForm.IView view;
     IProductForm.IInteractor interactor;
 
     public ProductFormPresenter(IProductForm.IView view) {
         this.view = view;
-        interactor = new ProductFormModel(this);
+        interactor = new ProductFormModel(this,this);
 
     }
 
@@ -30,6 +32,11 @@ public class ProductFormPresenter implements IProductForm.IPresenter ,IProductFo
         }
     }
 
+    @Override
+    public void publishProduct(Product product) {
+        view.displayLoader(true);
+        interactor.publishProduct(product);
+    }
 
 
     @Override
@@ -40,6 +47,18 @@ public class ProductFormPresenter implements IProductForm.IPresenter ,IProductFo
 
     @Override
     public void onErrorCategories(String error) {
+        view.displayLoader(false);
+        view.displayError(error);
+    }
+
+    @Override
+    public void onSuccessPublish(ProductResponse productResponse) {
+        view.displayLoader(false);
+        view.publishProductResponse(productResponse);
+    }
+
+    @Override
+    public void onErrorPublish(String error) {
         view.displayLoader(false);
         view.displayError(error);
     }
