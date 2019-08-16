@@ -1,6 +1,7 @@
 package co.edu.udea.rappigarage_android.Product.Publish.API;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import co.edu.udea.rappigarage_android.Product.Publish.API.PhotoModels.Result;
 import okhttp3.MultipartBody;
@@ -16,10 +17,10 @@ public interface IProductFormService  {
     @POST("Products")
     Call<ProductResponse> publishProduct(@Body Product body);
 
-    /*@Multipart
+    @Multipart
     @POST("ImageContainers/product-photo-container/upload")
-    Call<Result> uploadPhoto (@Part MultipartBody.part photo);
-    */
+    Call<Result> uploadPhoto (@Part List<MultipartBody.Part> photos );
+
 
 
 }

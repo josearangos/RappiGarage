@@ -62,11 +62,19 @@ import co.edu.udea.rappigarage_android.R;
 
 public class ProductFormActivity extends AppCompatActivity implements IProductForm.IView  {
 
-    HashMap<String,Integer> categoriesList;
-    ArrayList<String> returnValue = new ArrayList<>();
+    HashMap<String,Integer> categoriesList ;
+    ArrayList<String> urisPhotos = new ArrayList<>(); // Uris images
     String morcilla ="";
     PlacesClient placesClient;
     Double latitude,longitude =0.0;
+
+    public ArrayList<String> getUrisPhotos() {
+        return urisPhotos;
+    }
+
+    public void setUrisPhotos(ArrayList<String> urisPhotos) {
+        this.urisPhotos = urisPhotos;
+    }
 
     public Double getLatitude() {
         return latitude;
@@ -85,6 +93,7 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
     }
 
     //Views
+    private Button sendPhotos;
     private ImageView loadingImage ;
     private  Button location;
     private ChipGroup tagGroup_categories,warranty;
@@ -149,7 +158,8 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
 
 
 
-
+        //Temporal photos Button
+        this.sendPhotos = (Button)findViewById(R.id.sendPhotos);
         //Initialice views
         this.loadingImage= (ImageView)findViewById(R.id.loadingImage);
         this.progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -186,10 +196,16 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
                 //imprimo los ids de las categorias seleccionadas
                 Toast.makeText(getApplicationContext(),String.valueOf(tagsCheckedId.toString()),Toast.LENGTH_SHORT).show();
                 //PUBLICAR PRODUCTO SIN IMAGEN
+              //  publishPhotos(getUrisPhotos());
                 publishProduct();
             }
         });
-
+        this.sendPhotos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                publishPhotos(getUrisPhotos());
+            }
+        });
 
     }
 
@@ -273,6 +289,16 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
         Toast.makeText(getApplicationContext(),String.valueOf(productResponse.getId()),Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void publishPhotos(ArrayList<String> urisPhotos) {
+         this.presenter.publishPhotos(urisPhotos);
+    }
+
+    @Override
+    public void displaySuccesFull(String ms) {
+        Toast.makeText(getApplicationContext(),ms,Toast.LENGTH_LONG).show();
+    }
+
     public Integer getIdCategory(String name){
         return this.categoriesList.get(name);
     }
@@ -332,20 +358,16 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
 
 
     public void loadingImage(View view) {
-        /*
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            intent.setType("image/");
-            startActivityForResult(intent.createChooser(intent,"Seleccione la Aplicacion"),10);*/
 
         Options options = Options.init()
                 .setRequestCode(100)
-                .setCount(3)
+                .setCount(10)
                 .setFrontfacing(false)
                 .setImageQuality(ImageQuality.LOW)
-                .setPreSelectedUrls(returnValue)
+                .setPreSelectedUrls(urisPhotos)
                 .setScreenOrientation(Options.SCREEN_ORIENTATION_PORTRAIT)
                 .setPath("/rappiGarage/images");
-        options.setPreSelectedUrls(returnValue);
+        options.setPreSelectedUrls(urisPhotos);
         Pix.start(ProductFormActivity.this, options);
 
     }
@@ -353,13 +375,11 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //Log.e("val", "requestCode ->  " + requestCode+"  resultCode "+resultCode);
         switch (requestCode) {
             case (100): {
                 if (resultCode == RESULT_OK) {
-                    returnValue = data.getStringArrayListExtra(Pix.IMAGE_RESULTS);
-                    loadingImage.setImageURI(Uri.parse(returnValue.get(0)));
-
+                    setUrisPhotos(data.getStringArrayListExtra(Pix.IMAGE_RESULTS));
+                    loadingImage.setImageURI(Uri.parse(urisPhotos.get(0)));
                 }
             }
             break;
