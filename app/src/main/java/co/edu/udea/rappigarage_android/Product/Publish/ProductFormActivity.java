@@ -64,7 +64,7 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
 
     HashMap<String,Integer> categoriesList;
     ArrayList<String> returnValue = new ArrayList<>();
-    String morcilla ="AIzaSyBS7E706CIUuXJmAefzTa7kXXEyPWzRJ6o";
+    String morcilla ="";
     PlacesClient placesClient;
     Double latitude,longitude =0.0;
 
