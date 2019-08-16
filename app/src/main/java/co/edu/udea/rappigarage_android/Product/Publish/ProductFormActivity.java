@@ -1,59 +1,56 @@
 package co.edu.udea.rappigarage_android.Product.Publish;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.button.MaterialButton;
-import android.support.design.chip.Chip;
-import android.support.design.chip.ChipGroup;
-import android.support.design.widget.TextInputEditText;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.Toast;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.fxn.pix.Options;
+import com.fxn.pix.Pix;
+import com.fxn.utility.ImageQuality;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.places.ui.PlacePicker;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.PlacesClient;
-import com.google.android.libraries.places.internal.ei;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.textfield.TextInputEditText;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 import com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar;
 
-
+import java.io.File;
 import java.io.IOException;
-import java.nio.FloatBuffer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import co.edu.udea.rappigarage_android.GlobalServices.Category.Category;
 import co.edu.udea.rappigarage_android.Product.Publish.API.Location;
 import co.edu.udea.rappigarage_android.Product.Publish.API.Measures;
@@ -63,11 +60,11 @@ import co.edu.udea.rappigarage_android.Product.Publish.API.ProductResponse;
 import co.edu.udea.rappigarage_android.R;
 
 
-public class ProductFormActivity extends AppCompatActivity implements IProductForm.IView   {
+public class ProductFormActivity extends AppCompatActivity implements IProductForm.IView  {
 
     HashMap<String,Integer> categoriesList;
-
-    String morcilla ="";
+    ArrayList<String> returnValue = new ArrayList<>();
+    String morcilla ="AIzaSyBS7E706CIUuXJmAefzTa7kXXEyPWzRJ6o";
     PlacesClient placesClient;
     Double latitude,longitude =0.0;
 
@@ -88,6 +85,7 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
     }
 
     //Views
+    private ImageView loadingImage ;
     private  Button location;
     private ChipGroup tagGroup_categories,warranty;
     private Toolbar toolbar;
@@ -119,7 +117,7 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
         this.presenter = new ProductFormPresenter(this);
         this.presenter.getCategories();
         settingGooglePlaces();
-
+        requestPermission();
 
 
     }
@@ -149,7 +147,11 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
             }
         });
 
+
+
+
         //Initialice views
+        this.loadingImage= (ImageView)findViewById(R.id.loadingImage);
         this.progressBar = (ProgressBar) findViewById(R.id.progressBar);
         this.pickerWidth = (HoloCircleSeekBar) findViewById(R.id.pickerWidth);
         this.pickerHeigth = (HoloCircleSeekBar) findViewById(R.id.pickerHeigth);
@@ -328,6 +330,64 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
         }
     }
 
+
+    public void loadingImage(View view) {
+        /*
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            intent.setType("image/");
+            startActivityForResult(intent.createChooser(intent,"Seleccione la Aplicacion"),10);*/
+
+        Options options = Options.init()
+                .setRequestCode(100)
+                .setCount(3)
+                .setFrontfacing(false)
+                .setImageQuality(ImageQuality.LOW)
+                .setPreSelectedUrls(returnValue)
+                .setScreenOrientation(Options.SCREEN_ORIENTATION_PORTRAIT)
+                .setPath("/rappiGarage/images");
+        options.setPreSelectedUrls(returnValue);
+        Pix.start(ProductFormActivity.this, options);
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //Log.e("val", "requestCode ->  " + requestCode+"  resultCode "+resultCode);
+        switch (requestCode) {
+            case (100): {
+                if (resultCode == RESULT_OK) {
+                    returnValue = data.getStringArrayListExtra(Pix.IMAGE_RESULTS);
+                    loadingImage.setImageURI(Uri.parse(returnValue.get(0)));
+
+                }
+            }
+            break;
+        }
+    }
+
+
+    public void requestPermission(){
+        PermissionListener permissionlistener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                Toast.makeText(ProductFormActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onPermissionDenied(List<String> deniedPermissions) {
+                Toast.makeText(ProductFormActivity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+
+        };
+
+        TedPermission.with(this)
+                .setPermissionListener(permissionlistener)
+                .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
+                .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+                .check();
+    }
 
 
 
