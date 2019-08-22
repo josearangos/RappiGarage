@@ -48,6 +48,7 @@
                         android:text="Loading photo"
                         />
 
+
                 </LinearLayout>
 
 
@@ -73,6 +74,7 @@
                         android:layout_height="wrap_content">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/price"
+                            android:background="@color/quantum_white_100"
                             android:inputType="numberDecimal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -96,6 +98,7 @@
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/name"
+                            android:background="@color/quantum_white_100"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/name"
@@ -115,6 +118,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/Qdescription"
+                            android:background="@color/quantum_white_100"
+
                             />
 
 
@@ -299,7 +304,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_width="wrap_content"
                                     app:max="100"
-
+                                    app:init_position="80"
                                     app:show_text="true"
                                     app:pointer_color="@color/tomato"
                                     app:pointer_halo_color="@color/tomato"
@@ -329,6 +334,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_width="wrap_content"
                                     app:max="100"
+                                    app:init_position="60"
                                     app:show_text="true"
                                     app:pointer_color="@color/tomato"
                                     app:pointer_halo_color="@color/tomato"
@@ -365,6 +371,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_width="wrap_content"
                                     app:max="100"
+                                    app:init_position="40"
                                     app:show_text="true"
                                     app:pointer_color="@color/tomato"
                                     app:pointer_halo_color="@color/tomato"
@@ -400,6 +407,7 @@
                                     app:pointer_size="12dp"
                                     app:text_color="@color/colorPrimary"
                                     app:text_size="12sp"
+                                    app:init_position="30"
                                     app:wheel_active_color="@color/greenLight"
                                     app:wheel_unactive_color="@color/pink"/>
 
@@ -409,21 +417,12 @@
 
                     </LinearLayout>
 
-
-
-
-
-
-
-
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/publishBtn"
                         android:layout_height="wrap_content"
                         android:text="@string/publish"
                         style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                         android:layout_width="match_parent" />
-
-
 
                 </LinearLayout>
 
@@ -440,7 +439,23 @@
             style="?android:attr/progressBarStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
     </FrameLayout>
 
 
 </ScrollView>
+<!--
+<com.airbnb.lottie.LottieAnimationView
+                        android:layout_gravity="end"
+                        android:background="@color/tomato"
+                        app:lottie_rawRes="@raw/introrappi"
+                        android:visibility="visible"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+
+
+                        />
+
+-->
