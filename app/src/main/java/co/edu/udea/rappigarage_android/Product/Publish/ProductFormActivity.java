@@ -64,7 +64,7 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
 
     HashMap<String,Integer> categoriesList ;
     ArrayList<String> urisPhotos = new ArrayList<>(); // Uris images
-    String morcilla ="";
+    String morcilla = "AIzaSyBS7E706CIUuXJmAefzTa7kXXEyPWzRJ6o";
     PlacesClient placesClient;
     Double latitude,longitude =0.0;
 
@@ -95,7 +95,7 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
     //Views
     private Button sendPhotos;
     private ImageView loadingImage ;
-    private  Button location;
+    private Button location;
     private ChipGroup tagGroup_categories,warranty;
     private Toolbar toolbar;
     private TextInputEditText price;

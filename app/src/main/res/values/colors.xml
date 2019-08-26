@@ -12,5 +12,9 @@
     <color name="yellow">#FFD576</color>
     <color name="purple">#AD5BDD</color>
     <color name="greenBlue">#62CFCC</color>
-
+    <color name="black">#000</color>
+    <color name="gray700">#4A5568</color>
+    <color name="gray500">#A0AEC0</color>
+    <color name="gray200">#EDF2F7</color>
+    <color name="white">#FFFFFF</color>
 </resources>

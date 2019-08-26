@@ -41,12 +41,13 @@
                         android:layout_height="100dp"
                         android:src="@android:drawable/ic_menu_camera"
                         />
+
                     <Button
                         android:id="@+id/sendPhotos"
-                        android:layout_width="match_parent"
+                        android:layout_width="250dp"
                         android:layout_height="wrap_content"
                         android:text="Loading photo"
-                        />
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -57,37 +58,42 @@
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <TextView
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:textSize="22dp"
-                        android:textStyle="bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
                         android:text="@string/price"
-                        />
+                        android:textColor="@color/gray700"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="10dp"/>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:orientation="vertical"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content" >
+
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/price"
-                            android:inputType="numberDecimal"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
                             android:hint="@string/price"
-                            />
+                            android:inputType="numberDecimal"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:theme="@style/RGTextInput"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <TextView
-                        android:layout_marginTop="10dp"
-                        android:textSize="22dp"
-                        android:textStyle="bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
                         android:text="@string/detail"
-                        />
+                        android:textColor="@color/gray700"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
@@ -99,6 +105,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/name"
+                            android:backgroundTint="@color/white"
                             />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -115,18 +122,20 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/Qdescription"
+                            android:theme="@style/RGTextInput"
                             />
 
 
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <TextView
-                        android:textSize="22dp"
-                        android:textStyle="bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
                         android:text="@string/location"
-                        />
+                        android:textColor="@color/gray700"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                     <fragment
 
@@ -136,19 +145,21 @@
                         android:layout_height="wrap_content"/>
 
                     <TextView
-                        android:textSize="16dp"
-                        android:layout_marginBottom="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginBottom="10dp"
                         android:text="@string/availableQuantity"
-                        />
+                        android:textColor="@color/gray700"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                     <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
                         app:initialNumber="1"
                         android:layout_width="match_parent"
                         android:id="@+id/availableQuantity"
                         android:layout_centerVertical="true"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
 
                     <TextView
                         android:layout_marginBottom="10dp"
@@ -165,35 +176,37 @@
                         android:layout_height="wrap_content">
 
                         <com.google.android.material.chip.Chip
-                            android:textColor="@color/colorSecundary"
-                            app:chipBackgroundColor="@color/colorPrimary"
+                            android:id="@+id/MesesTres"
+                            style="@style/Widget.MaterialComponents.Chip.Entry"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="3 meses"
-                            android:id="@+id/MesesTres"
-                            app:closeIconVisible="false"
-                            style="@style/Widget.MaterialComponents.Chip.Entry"
-                            />
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            app:chipBackgroundColor="@color/gray200"
+                            app:closeIconVisible="false" />
+
                         <com.google.android.material.chip.Chip
-                            android:textColor="@color/colorSecundary"
-                            app:chipBackgroundColor="@color/colorPrimary"
+                            android:id="@+id/MesesSeis"
+                            style="@style/Widget.MaterialComponents.Chip.Entry"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="6 meses"
-                            android:id="@+id/MesesSeis"
-                            app:closeIconVisible="false"
-                            style="@style/Widget.MaterialComponents.Chip.Entry"
-                            />
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            app:chipBackgroundColor="@color/gray200"
+                            app:closeIconVisible="false" />
+
                         <com.google.android.material.chip.Chip
                             android:id="@+id/MesesDoce"
-                            android:textColor="@color/colorSecundary"
-                            app:chipBackgroundColor="@color/colorPrimary"
+                            style="@style/Widget.MaterialComponents.Chip.Entry"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="12 meses"
-                            app:closeIconVisible="false"
-                            style="@style/Widget.MaterialComponents.Chip.Entry"
-                            />
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            app:chipBackgroundColor="@color/gray200"
+                            app:closeIconVisible="false" />
 
                     </com.google.android.material.chip.ChipGroup>
 
@@ -239,13 +252,13 @@
                     </LinearLayout>
 
                     <TextView
-                        android:layout_margin="10dp"
-                        android:textSize="22dp"
-                        android:textStyle="bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
                         android:text="@string/categories"
-                        />
+                        android:textColor="@color/gray700"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
 
 
@@ -259,15 +272,13 @@
                     </com.google.android.material.chip.ChipGroup>
 
 
-
                     <TextView
-                        android:layout_margin="10dp"
-                        android:textSize="22dp"
-                        android:textStyle="bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
                         android:text="@string/measures"
-                        />
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                     <LinearLayout
                         android:orientation="vertical"
