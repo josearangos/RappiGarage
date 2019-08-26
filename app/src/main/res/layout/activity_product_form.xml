@@ -12,16 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             >
-
             <include android:id="@+id/toolbar"
                 layout="@layout/tool_bar"/>
-
             <LinearLayout
                 android:weightSum="1"
                 android:orientation="vertical"
@@ -51,7 +48,6 @@
 
                 </LinearLayout>
 
-
                 <LinearLayout
                     android:padding="12dp"
                     android:layout_weight="0.9"
@@ -69,6 +65,7 @@
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="10dp"/>
+
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
@@ -102,6 +99,7 @@
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/name"
+                            android:background="@color/quantum_white_100"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/name"
@@ -174,6 +172,17 @@
                         app:singleSelection="true"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+                        <com.google.android.material.chip.Chip
+                            android:textColor="@color/colorSecundary"
+                            app:chipBackgroundColor="@color/colorPrimary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:selectAllOnFocus="true"
+                            android:text="Sin garantía"
+                            android:id="@+id/sinGarantia"
+                            app:closeIconVisible="false"
+                            style="@style/Widget.MaterialComponents.Chip.Entry"
+                            />
 
                         <com.google.android.material.chip.Chip
                             android:id="@+id/MesesTres"
@@ -285,147 +294,90 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         >
-
-                        <LinearLayout
-                            android:gravity="left"
-                            android:orientation="horizontal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="200dp">
-                            <LinearLayout
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
                                 <TextView
                                     android:textSize="14dp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/width"
                                     />
-                                <com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar
-                                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                                    android:layout_centerInParent="true"
-                                    android:id="@+id/pickerWidth"
-                                    android:layout_height="match_parent"
-                                    android:layout_width="wrap_content"
-                                    app:max="100"
+                                <com.jaygoo.widget.RangeSeekBar
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:rsb_max="100"
+                                    app:rsb_mode="single"
+                                    app:rsb_indicator_background_color="@color/tomato"
+                                    app:rsb_progress_height="4dp"
+                                    app:rsb_progress_radius="4dp"
+                                    app:rsb_tick_mark_mode="number"
+                                    app:rsb_indicator_show_mode="alwaysShow"
+                                    app:rsb_indicator_width="30dp"
+                                    app:rsb_indicator_height="30dp"
+                                    android:id="@+id/ancho"
+                                    />
 
-                                    app:show_text="true"
-                                    app:pointer_color="@color/tomato"
-                                    app:pointer_halo_color="@color/tomato"
-                                    app:pointer_size="12dp"
-                                    app:text_color="@color/colorPrimary"
-                                    app:text_size="12sp"
-                                    app:wheel_active_color="@color/greenLight"
-                                    app:wheel_unactive_color="@color/pink"/>
-
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
                                 <TextView
                                     android:textSize="14dp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/heigth"
                                     />
-                                <com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar
-                                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                                    android:layout_centerInParent="true"
-                                    android:id="@+id/pickerHeigth"
-                                    android:layout_height="match_parent"
-                                    android:layout_width="wrap_content"
-                                    app:max="100"
-                                    app:show_text="true"
-                                    app:pointer_color="@color/tomato"
-                                    app:pointer_halo_color="@color/tomato"
-                                    app:pointer_size="12dp"
-                                    app:text_color="@color/colorPrimary"
-                                    app:text_size="12sp"
-                                    app:wheel_active_color="@color/greenLight"
-                                    app:wheel_unactive_color="@color/pink"/>
+                                <com.jaygoo.widget.RangeSeekBar
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:rsb_max="100"
+                                    app:rsb_mode="single"
+                                    app:rsb_indicator_background_color="@color/tomato"
+                                    app:rsb_progress_height="4dp"
+                                    app:rsb_progress_radius="4dp"
+                                    app:rsb_tick_mark_mode="number"
+                                    app:rsb_indicator_show_mode="alwaysShow"
+                                    app:rsb_indicator_width="30dp"
+                                    app:rsb_indicator_height="30dp"
+                                    android:id="@+id/alto"
+                                    />
 
-                            </LinearLayout>
-
-                        </LinearLayout>
-                        <LinearLayout
-                            android:gravity="left"
-                            android:orientation="horizontal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="200dp">
-                            <LinearLayout
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
                                 <TextView
                                     android:textSize="14dp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/large"
                                     />
-                                <com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar
-                                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                                    android:layout_centerInParent="true"
-                                    android:id="@+id/pickerLarge"
-                                    android:layout_height="match_parent"
-                                    android:layout_width="wrap_content"
-                                    app:max="100"
-                                    app:show_text="true"
-                                    app:pointer_color="@color/tomato"
-                                    app:pointer_halo_color="@color/tomato"
-                                    app:pointer_size="12dp"
-                                    app:text_color="@color/colorPrimary"
-                                    app:text_size="12sp"
-                                    app:wheel_active_color="@color/greenLight"
-                                    app:wheel_unactive_color="@color/pink"/>
+                                <com.jaygoo.widget.RangeSeekBar
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:rsb_max="100"
+                                    app:rsb_mode="single"
+                                    app:rsb_indicator_background_color="@color/tomato"
+                                    app:rsb_progress_height="4dp"
+                                    app:rsb_progress_radius="4dp"
+                                    app:rsb_tick_mark_mode="number"
+                                    app:rsb_indicator_show_mode="alwaysShow"
+                                    app:rsb_indicator_width="30dp"
+                                    app:rsb_indicator_height="30dp"
+                                    android:id="@+id/largo"
+                                    />
 
-                            </LinearLayout>
-                            <LinearLayout
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:orientation="vertical"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
                                 <TextView
                                     android:textSize="14dp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/weigth"
                                     />
-                                <com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar
-                                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                                    android:layout_centerInParent="true"
-                                    android:id="@+id/pickerWeigth"
-                                    android:layout_height="match_parent"
-                                    android:layout_width="wrap_content"
-                                    app:max="100"
-                                    app:show_text="true"
-                                    app:pointer_color="@color/tomato"
-                                    app:pointer_halo_color="@color/tomato"
-                                    app:pointer_size="12dp"
-                                    app:text_color="@color/colorPrimary"
-                                    app:text_size="12sp"
-                                    app:wheel_active_color="@color/greenLight"
-                                    app:wheel_unactive_color="@color/pink"/>
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
+                                <com.jaygoo.widget.RangeSeekBar
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:rsb_max="100"
+                                    app:rsb_mode="single"
+                                    app:rsb_indicator_background_color="@color/tomato"
+                                    app:rsb_progress_height="4dp"
+                                    app:rsb_progress_radius="4dp"
+                                    app:rsb_tick_mark_mode="number"
+                                    app:rsb_indicator_show_mode="alwaysShow"
+                                    app:rsb_indicator_width="30dp"
+                                    app:rsb_indicator_height="30dp"
+                                    android:id="@+id/peso"
+                                    />
                     </LinearLayout>
-
-
-
-
-
-
-
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/publishBtn"
@@ -433,8 +385,6 @@
                         android:text="@string/publish"
                         style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                         android:layout_width="match_parent" />
-
-
 
                 </LinearLayout>
 
@@ -451,7 +401,23 @@
             style="?android:attr/progressBarStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
     </FrameLayout>
 
 
 </ScrollView>
+<!--
+<com.airbnb.lottie.LottieAnimationView
+                        android:layout_gravity="end"
+                        android:background="@color/tomato"
+                        app:lottie_rawRes="@raw/introrappi"
+                        android:visibility="visible"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+
+
+                        />
+
+-->
