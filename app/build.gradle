@@ -35,7 +35,6 @@ dependencies {
 
     //Buttons and seekbar
     implementation 'com.cepheuen.elegant-number-button:lib:1.0.2'
-    implementation 'com.github.JesusM:HoloCircleSeekBar:v2.2.2'
 
     //API GoogleMaps
     implementation 'com.google.android.libraries.places:places:1.1.0'
@@ -44,7 +43,13 @@ dependencies {
     //Animations
     implementation "com.airbnb.android:lottie:3.0.7"
 
+    //RangeSeekBar
+    implementation 'com.github.Jay-Goo:RangeSeekBar:v3.0.0'
 
+    //location services
+
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'com.jackandphantom.android:circularimageview:1.2.0'
 
     implementation 'com.google.android.gms:play-services-places:16.0.0'
     implementation 'com.google.android.material:material:1.1.0-alpha04'

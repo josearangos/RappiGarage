@@ -20,7 +20,10 @@ import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.fxn.pix.Options;
 import com.fxn.pix.Pix;
 import com.fxn.utility.ImageQuality;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.PlacesClient;
@@ -32,7 +35,8 @@ import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputEditText;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
-import com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar;
+import com.jackandphantom.circularimageview.RoundedImage;
+import com.jaygoo.widget.RangeSeekBar;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,7 +55,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import co.edu.udea.rappigarage_android.GlobalServices.Category.Category;
+import co.edu.udea.rappigarage_android.Product.Adapters.ImagesAdapter;
 import co.edu.udea.rappigarage_android.Product.Publish.API.Location;
 import co.edu.udea.rappigarage_android.Product.Publish.API.Measures;
 import co.edu.udea.rappigarage_android.Product.Publish.API.Photo;
@@ -63,10 +71,45 @@ import co.edu.udea.rappigarage_android.R;
 public class ProductFormActivity extends AppCompatActivity implements IProductForm.IView  {
 
     HashMap<String,Integer> categoriesList ;
+    //Images
+    private RecyclerView listImages ;
     ArrayList<String> urisPhotos = new ArrayList<>(); // Uris images
+    ImagesAdapter imagesAdapter ;
+
     String morcilla ="";
     PlacesClient placesClient;
     Double latitude,longitude =0.0;
+    final int  PLACE_PICKER_REQUEST = 1;
+    //Views
+    private Button sendPhotos, testLocation;
+    private RoundedImage loadingImage ;
+    private  Button location;
+    private ChipGroup tagGroup_categories,warranty;
+    private Toolbar toolbar;
+    private TextInputEditText price;
+    private TextInputEditText name;
+    private TextInputEditText description;
+    private ElegantNumberButton availableQuantity;
+    private Switch condition;
+    private RangeSeekBar pickerWidth;
+    private RangeSeekBar pickerHeigth;
+    private RangeSeekBar pickerLarge;
+    private RangeSeekBar pickerWeigth;
+    private ProgressBar progressBar;
+    private MaterialButton publishBtn;
+
+    //MVP
+    private IProductForm.IPresenter presenter;
+
+    public void addImagesSlider(){
+        // add a divider after each item for more clarity
+        listImages.addItemDecoration(new DividerItemDecoration(ProductFormActivity.this, LinearLayoutManager.HORIZONTAL));
+        imagesAdapter = new ImagesAdapter(getUrisPhotos(), getApplicationContext());
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(ProductFormActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        listImages.setLayoutManager(horizontalLayoutManager);
+        listImages.setAdapter(imagesAdapter);
+        imagesAdapter.notifyDataSetChanged();
+    }
 
     public ArrayList<String> getUrisPhotos() {
         return urisPhotos;
@@ -92,26 +135,6 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
         this.longitude = longitude;
     }
 
-    //Views
-    private Button sendPhotos;
-    private ImageView loadingImage ;
-    private  Button location;
-    private ChipGroup tagGroup_categories,warranty;
-    private Toolbar toolbar;
-    private TextInputEditText price;
-    private TextInputEditText name;
-    private TextInputEditText description;
-    private ElegantNumberButton availableQuantity;
-    private Switch condition;
-    private HoloCircleSeekBar pickerWidth;
-    private HoloCircleSeekBar pickerHeigth;
-    private HoloCircleSeekBar pickerLarge;
-    private HoloCircleSeekBar pickerWeigth;
-    private ProgressBar progressBar;
-    private MaterialButton publishBtn;
-
-    //MVP
-    private IProductForm.IPresenter presenter;
 
     public ProductFormActivity() {
         this.presenter = new ProductFormPresenter(this);
@@ -157,16 +180,25 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
         });
 
 
+        //List images
+        this.listImages = (RecyclerView)findViewById(R.id.imgList);
+
 
         //Temporal photos Button
+        this.testLocation = (Button)findViewById(R.id.testLocation);
         this.sendPhotos = (Button)findViewById(R.id.sendPhotos);
         //Initialice views
-        this.loadingImage= (ImageView)findViewById(R.id.loadingImage);
+        this.loadingImage= (RoundedImage)findViewById(R.id.loadingImage);
         this.progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        this.pickerWidth = (HoloCircleSeekBar) findViewById(R.id.pickerWidth);
-        this.pickerHeigth = (HoloCircleSeekBar) findViewById(R.id.pickerHeigth);
-        this.pickerLarge = (HoloCircleSeekBar) findViewById(R.id.pickerLarge);
-        this.pickerWeigth = (HoloCircleSeekBar) findViewById(R.id.pickerWeigth);
+        this.pickerWidth = (RangeSeekBar) findViewById(R.id.ancho);
+        this.pickerHeigth = (RangeSeekBar) findViewById(R.id.alto);
+        this.pickerLarge = (RangeSeekBar) findViewById(R.id.largo);
+        this.pickerWeigth = (RangeSeekBar) findViewById(R.id.peso);
+        pickerWidth.setIndicatorTextDecimalFormat("0");
+        pickerHeigth.setIndicatorTextDecimalFormat("0");
+        pickerLarge.setIndicatorTextDecimalFormat("0");
+        pickerWeigth.setIndicatorTextDecimalFormat("0");
+
         this.condition = (Switch) findViewById(R.id.condition);
         this.availableQuantity = (ElegantNumberButton) findViewById(R.id.availableQuantity);
         this.description = (TextInputEditText) findViewById(R.id.description);
@@ -206,6 +238,16 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
                 publishPhotos(getUrisPhotos());
             }
         });
+        this.testLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+            }
+        });
+
+
+
 
     }
 
@@ -253,9 +295,12 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
     public void publishProduct() {
         List< Photo> photos = new ArrayList<Photo>();
         Location location = new Location(getLatitude(),getLongitude());
-        Measures measures =new Measures(this.pickerWidth.getValue(),this.pickerHeigth.getValue(),this.pickerWeigth.getValue(),this.pickerLarge.getValue());
+        Measures measures =new Measures(
+                Integer.valueOf((int) this.pickerWidth.getLeftSeekBar().getProgress()),
+                Integer.valueOf((int) this.pickerHeigth.getLeftSeekBar().getProgress()),
+                Integer.valueOf((int) this.pickerWeigth.getLeftSeekBar().getProgress()),
+                Integer.valueOf((int) this.pickerLarge.getLeftSeekBar().getProgress()));
         photos.add(new Photo("https://avatars0.githubusercontent.com/u/13352055?s=460&v=4"));
-
 
         Product product = new Product(
                 Double.valueOf(this.price.getText().toString()),
@@ -379,10 +424,18 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
             case (100): {
                 if (resultCode == RESULT_OK) {
                     setUrisPhotos(data.getStringArrayListExtra(Pix.IMAGE_RESULTS));
-                    loadingImage.setImageURI(Uri.parse(urisPhotos.get(0)));
+                    addImagesSlider();
                 }
             }
             break;
+            case (PLACE_PICKER_REQUEST):{
+                if(resultCode == RESULT_OK){
+
+
+                }
+            }
+
+
         }
     }
 
@@ -405,7 +458,11 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
         TedPermission.with(this)
                 .setPermissionListener(permissionlistener)
                 .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
-                .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+                .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_NETWORK_STATE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
                 .check();
     }
 
