@@ -49,7 +49,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -62,7 +61,7 @@ import co.edu.udea.rappigarage_android.GlobalServices.Category.Category;
 import co.edu.udea.rappigarage_android.Product.Adapters.ImagesAdapter;
 import co.edu.udea.rappigarage_android.Product.Publish.API.Location;
 import co.edu.udea.rappigarage_android.Product.Publish.API.Measures;
-import co.edu.udea.rappigarage_android.Product.Publish.API.Photo;
+import co.edu.udea.rappigarage_android.Product.Publish.API.PhotoSource;
 import co.edu.udea.rappigarage_android.Product.Publish.API.Product;
 import co.edu.udea.rappigarage_android.Product.Publish.API.ProductResponse;
 import co.edu.udea.rappigarage_android.R;
@@ -71,17 +70,20 @@ import co.edu.udea.rappigarage_android.R;
 public class ProductFormActivity extends AppCompatActivity implements IProductForm.IView  {
 
     HashMap<String,Integer> categoriesList ;
+    private  String cityName = "";
+    private String warrantyProduct  = "";
+    Measures measures;
     //Images
     private RecyclerView listImages ;
     ArrayList<String> urisPhotos = new ArrayList<>(); // Uris images
     ImagesAdapter imagesAdapter ;
 
-    String morcilla ="";
+    String morcilla ="AIzaSyBS7E706CIUuXJmAefzTa7kXXEyPWzRJ6o";
     PlacesClient placesClient;
     Double latitude,longitude =0.0;
     final int  PLACE_PICKER_REQUEST = 1;
     //Views
-    private Button sendPhotos, testLocation;
+    private Button sendPhotos;
     private RoundedImage loadingImage ;
     private  Button location;
     private ChipGroup tagGroup_categories,warranty;
@@ -97,6 +99,15 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
     private RangeSeekBar pickerWeigth;
     private ProgressBar progressBar;
     private MaterialButton publishBtn;
+
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
 
     //MVP
     private IProductForm.IPresenter presenter;
@@ -166,7 +177,6 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
 
     @Override
     public void initializeViews() {
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -184,9 +194,6 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
         this.listImages = (RecyclerView)findViewById(R.id.imgList);
 
 
-        //Temporal photos Button
-        this.testLocation = (Button)findViewById(R.id.testLocation);
-        this.sendPhotos = (Button)findViewById(R.id.sendPhotos);
         //Initialice views
         this.loadingImage= (RoundedImage)findViewById(R.id.loadingImage);
         this.progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -222,37 +229,23 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
                     Chip chip =(Chip)tagGroup_categories.getChildAt(i);
                     if(chip.isChecked()){
                         tagsCheckedId.add(getIdCategory(String.valueOf(chip.getText())));
+
                     }
 
                 }
                 //imprimo los ids de las categorias seleccionadas
-                Toast.makeText(getApplicationContext(),String.valueOf(tagsCheckedId.toString()),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),String.valueOf(tagsCheckedId.toString()),Toast.LENGTH_SHORT).show();
                 //PUBLICAR PRODUCTO SIN IMAGEN
-              //  publishPhotos(getUrisPhotos());
                 publishProduct();
             }
         });
-        this.sendPhotos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                publishPhotos(getUrisPhotos());
-            }
-        });
-        this.testLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
 
-            }
-        });
 
 
 
 
     }
-
-
-
 
     @Override
     public void getCategories(ArrayList<Category> categories) {
@@ -263,6 +256,7 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
             Chip chip = (Chip)inflaterCategories.inflate(R.layout.chip_item,null,false);
             chip.setText(category.getName());
             this.categoriesList.put(category.getName(),category.getId());
+
             this.tagGroup_categories.addView(chip);
 
         }
@@ -293,31 +287,37 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
 
     @Override
     public void publishProduct() {
-        List< Photo> photos = new ArrayList<Photo>();
-        Location location = new Location(getLatitude(),getLongitude());
-        Measures measures =new Measures(
-                Integer.valueOf((int) this.pickerWidth.getLeftSeekBar().getProgress()),
-                Integer.valueOf((int) this.pickerHeigth.getLeftSeekBar().getProgress()),
-                Integer.valueOf((int) this.pickerWeigth.getLeftSeekBar().getProgress()),
-                Integer.valueOf((int) this.pickerLarge.getLeftSeekBar().getProgress()));
-        photos.add(new Photo("https://avatars0.githubusercontent.com/u/13352055?s=460&v=4"));
 
-        Product product = new Product(
-                Double.valueOf(this.price.getText().toString()),
-                this.name.getText().toString(),
-                this.description.getText().toString(),
-                Integer.valueOf(this.availableQuantity.getNumber()),
-                getTextWarrantyProduct(this.warranty),
-                getCurrentUTC(),
-                true,
-                measures,
-                3,
-                1,
-                condition(),
-                location,
-                photos);
+        //if(validationForm() != false) {
 
-        this.presenter.publishProduct(product);
+            Location location = new Location(getLatitude(), getLongitude());
+            measures = new Measures(
+                    Integer.valueOf((int) this.pickerWidth.getLeftSeekBar().getProgress()),
+                    Integer.valueOf((int) this.pickerHeigth.getLeftSeekBar().getProgress()),
+                    Integer.valueOf((int) this.pickerWeigth.getLeftSeekBar().getProgress()),
+                    Integer.valueOf((int) this.pickerLarge.getLeftSeekBar().getProgress()));
+            Product product = new Product(
+                    Double.valueOf(this.price.getText().toString()),
+                    this.name.getText().toString(),
+                    this.description.getText().toString(),
+                    Integer.valueOf(this.availableQuantity.getNumber()),
+                    getTextWarrantyProduct(this.warranty),
+                    getCurrentUTC(),
+                    true,
+                    measures,
+                    0,
+                    1,
+                    condition(),
+                    getCityName(),
+                    location,
+                    null);
+
+            Toast.makeText(getApplicationContext(),this.getCityName(),Toast.LENGTH_SHORT).show();
+            this.presenter.publishProduct(product,getUrisPhotos());
+       // }else{
+        ///   Toast.makeText(getApplicationContext(),"complete el formulario",Toast.LENGTH_LONG).show();
+
+        //}
     }
 
     public String getCurrentUTC(){
@@ -334,10 +334,30 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
         Toast.makeText(getApplicationContext(),String.valueOf(productResponse.getId()),Toast.LENGTH_LONG).show();
     }
 
-    @Override
-    public void publishPhotos(ArrayList<String> urisPhotos) {
-         this.presenter.publishPhotos(urisPhotos);
+
+    public boolean validationForm(){
+        Boolean price, name,description,location,category,Measures =false, photos = false;
+        price = this.price.getText().toString().isEmpty();
+        name = this.name.getText().toString().isEmpty();
+        description = this.description.getText().toString().isEmpty();
+        location = this.getCityName().isEmpty();
+        photos = getUrisPhotos().isEmpty();
+
+
+        category = this.categoriesList.isEmpty();
+        if(measures!=null){
+            if(measures.getHeigth() == 0 || measures.getLarge() == 0
+            || measures.getWeigth() == 0 || measures.getWidth() == 0 ){
+                Measures = true;
+            }
+
+        }
+        if (price || name || description || location || category || Measures || photos ){
+            return false;
+        }
+        return true;
     }
+
 
     @Override
     public void displaySuccesFull(String ms) {
@@ -360,13 +380,14 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
         autocompleteSupportFragment.setCountry("CO");
 
         autocompleteSupportFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+
             @Override
             public void onPlaceSelected(@NonNull Place place) {
-
+                setCityName("");
                 try {
                     setLatitude(place.getLatLng().latitude);
                     setLongitude(place.getLatLng().longitude);
-                    String city = getCityNameByCoordinates(place.getLatLng().latitude,place.getLatLng().longitude);
+                    setCityName(getCityNameByCoordinates(place.getLatLng().latitude,place.getLatLng().longitude));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

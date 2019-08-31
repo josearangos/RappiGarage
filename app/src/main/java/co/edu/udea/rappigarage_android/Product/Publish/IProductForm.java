@@ -19,29 +19,22 @@ public interface IProductForm {
         void displayError(String error);
         void publishProduct();
         void publishProductResponse(ProductResponse productResponse);
-        void publishPhotos(ArrayList<String> urisPhotos);
         void displaySuccesFull(String ms);
     }
 
     interface IPresenter {
         void onDestroy();
         void getCategories();
-        void publishProduct(Product product);
-        void publishPhotos(ArrayList<String> urisPhotos);
+        void publishProduct(Product product,ArrayList<String> urisPhotos);
         void onSuccessPublish(ProductResponse productResponse);
         void onErrorPublish(String error);
-        void onSuccessPublishPhotos(Result result);
-        void onErrorPublishPhotos(String error);
     }
 
     interface IInteractor{
         void getCategories();
-        void publishProduct(Product product);
-        void publishPhotos(ArrayList<String> urisPhotos);
+        void publishProduct(Product product,ArrayList<String> urisPhotos);
 
     }
-
-
 
 
     interface CompleteListenerCategories {

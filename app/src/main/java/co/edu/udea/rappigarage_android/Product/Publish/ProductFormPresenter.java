@@ -34,16 +34,12 @@ public class ProductFormPresenter implements IProductForm.IPresenter ,IProductFo
     }
 
     @Override
-    public void publishProduct(Product product) {
+    public void publishProduct(Product product, ArrayList<String> urisPhotos) {
         view.displayLoader(true);
-        interactor.publishProduct(product);
+        interactor.publishProduct(product,urisPhotos);
     }
 
-    @Override
-    public void publishPhotos(ArrayList<String> urisPhotos) {
-        view.displayLoader(true);
-        this.interactor.publishPhotos(urisPhotos);
-    }
+
 
 
     @Override
@@ -62,6 +58,7 @@ public class ProductFormPresenter implements IProductForm.IPresenter ,IProductFo
     public void onSuccessPublish(ProductResponse productResponse) {
         view.displayLoader(false);
         view.publishProductResponse(productResponse);
+        view.displaySuccesFull("Producto creado con exito");
     }
 
     @Override
@@ -70,15 +67,7 @@ public class ProductFormPresenter implements IProductForm.IPresenter ,IProductFo
         view.displayError(error);
     }
 
-    @Override
-    public void onSuccessPublishPhotos(Result result) {
-        view.displayLoader(false);
-        view.displaySuccesFull("Loading photo succesful");
-    }
 
-    @Override
-    public void onErrorPublishPhotos(String error) {
-        view.displayLoader(false);
-        view.displayError(error);
-    }
+
+
 }

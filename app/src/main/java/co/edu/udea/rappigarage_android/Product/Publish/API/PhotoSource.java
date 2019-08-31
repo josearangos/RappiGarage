@@ -3,7 +3,7 @@ package co.edu.udea.rappigarage_android.Product.Publish.API;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Photo {
+public class PhotoSource {
 
     @SerializedName("source")
     @Expose
@@ -13,14 +13,14 @@ public class Photo {
      * No args constructor for use in serialization
      *
      */
-    public Photo() {
+    public PhotoSource() {
     }
 
     /**
      *
      * @param source
      */
-    public Photo(String source) {
+    public PhotoSource(String source) {
         super();
         this.source = source;
     }

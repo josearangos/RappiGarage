@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FF5B4A</color>  
+    <color name="colorPrimary">#FF5B4A</color>
     <color name="colorSecundary">#EFEFEF</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
@@ -13,5 +13,10 @@
     <color name="purple">#AD5BDD</color>
     <color name="greenBlue">#62CFCC</color>
     <color name="myGray">#EDF2F7</color>
-
+    <color name="black">#000</color>
+    <color name="gray700">#4A5568</color>
+    <color name="gray500">#A0AEC0</color>
+    <color name="gray200">#EDF2F7</color>
+    <color name="white">#FFFFFF</color>
+    <color name="green400">#68D391</color>
 </resources>

@@ -58,19 +58,7 @@
 
 
 
-                    <Button
-                        android:id="@+id/sendPhotos"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Loading photo"
-                        />
 
-                    <Button
-                        android:id="@+id/testLocation"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Location"
-                        />
 
                 </LinearLayout>
 
@@ -81,11 +69,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <TextView
-
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:textSize="22dp"
-                        android:textStyle="bold"
+                        android:theme="@style/RGLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/price"
@@ -99,18 +83,18 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/price"
                             android:background="@color/quantum_white_100"
-                            android:inputType="numberDecimal"
+                            android:inputType="number"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/price"
+                            android:theme="@style/RGTextInput"
 
                             />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <TextView
                         android:layout_marginTop="10dp"
-                        android:textSize="22dp"
-                        android:textStyle="bold"
+                        android:theme="@style/RGLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/detail"
@@ -127,6 +111,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/name"
+                            android:theme="@style/RGTextInput"
                             />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -144,30 +129,27 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/Qdescription"
                             android:background="@color/quantum_white_100"
-
+                            android:theme="@style/RGTextInput"
                             />
 
 
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <TextView
-                        android:textSize="22dp"
-                        android:textStyle="bold"
+                        android:theme="@style/RGLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/location"
                         />
 
                     <fragment
-
                         android:id="@+id/autoCompleteFragmentLocation"
                         android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
 
                     <TextView
-                        android:textSize="16dp"
-                        android:layout_marginBottom="10dp"
+                        android:theme="@style/RGLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/availableQuantity"
@@ -194,20 +176,19 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <com.google.android.material.chip.Chip
-                            android:textColor="@color/colorSecundary"
-                            app:chipBackgroundColor="@color/colorPrimary"
+                            android:theme="@style/RGLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:selectAllOnFocus="true"
                             android:text="Sin garantía"
+                            android:checked="true"
                             android:id="@+id/sinGarantia"
                             app:closeIconVisible="false"
                             style="@style/Widget.MaterialComponents.Chip.Entry"
                             />
 
                         <com.google.android.material.chip.Chip
-                            android:textColor="@color/colorSecundary"
-                            app:chipBackgroundColor="@color/colorPrimary"
+                            android:theme="@style/RGLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="3 meses"
@@ -216,8 +197,7 @@
                             style="@style/Widget.MaterialComponents.Chip.Entry"
                             />
                         <com.google.android.material.chip.Chip
-                            android:textColor="@color/colorSecundary"
-                            app:chipBackgroundColor="@color/colorPrimary"
+                            android:theme="@style/RGLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="6 meses"
@@ -227,8 +207,7 @@
                             />
                         <com.google.android.material.chip.Chip
                             android:id="@+id/MesesDoce"
-                            android:textColor="@color/colorSecundary"
-                            app:chipBackgroundColor="@color/colorPrimary"
+                            android:theme="@style/RGLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="12 meses"
@@ -241,10 +220,7 @@
 
 
                     <TextView
-                        android:layout_marginTop="10dp"
-
-                        android:textSize="16dp"
-                        android:layout_marginBottom="10dp"
+                        android:theme="@style/RGLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/condition"
@@ -256,8 +232,7 @@
                         android:orientation="horizontal"
                         android:layout_height="wrap_content">
                         <TextView
-                            android:textSize="16dp"
-                            android:layout_marginBottom="10dp"
+                            android:theme="@style/RGLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/Pnew"
@@ -271,8 +246,7 @@
                             android:textOff="@string/Pused"
                             />
                         <TextView
-                            android:textSize="16dp"
-                            android:layout_marginBottom="10dp"
+                            android:theme="@style/RGLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/Pused"
@@ -280,9 +254,7 @@
                     </LinearLayout>
 
                     <TextView
-                        android:layout_margin="10dp"
-                        android:textSize="22dp"
-                        android:textStyle="bold"
+                        android:theme="@style/RGLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/categories"
@@ -302,9 +274,7 @@
 
 
                     <TextView
-                        android:layout_margin="10dp"
-                        android:textSize="22dp"
-                        android:textStyle="bold"
+                        android:theme="@style/RGLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/measures"
@@ -325,8 +295,10 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:rsb_max="100"
+                                    app:rsb_progress_color="@color/green400"
                                     app:rsb_mode="single"
-                                    app:rsb_indicator_background_color="@color/tomato"
+                                    app:rsb_indicator_background_color="@color/gray200"
+                                    app:rsb_indicator_text_color="@color/black"
                                     app:rsb_progress_height="4dp"
                                     app:rsb_progress_radius="4dp"
                                     app:rsb_tick_mark_mode="number"
@@ -347,7 +319,8 @@
                                     android:layout_height="wrap_content"
                                     app:rsb_max="100"
                                     app:rsb_mode="single"
-                                    app:rsb_indicator_background_color="@color/tomato"
+                                    app:rsb_indicator_background_color="@color/gray200"
+                                    app:rsb_indicator_text_color="@color/black"
                                     app:rsb_progress_height="4dp"
                                     app:rsb_progress_radius="4dp"
                                     app:rsb_tick_mark_mode="number"
@@ -355,6 +328,8 @@
                                     app:rsb_indicator_width="30dp"
                                     app:rsb_indicator_height="30dp"
                                     android:id="@+id/alto"
+                                    app:rsb_progress_color="@color/green400"
+
                                     />
 
                                 <TextView
@@ -368,7 +343,8 @@
                                     android:layout_height="wrap_content"
                                     app:rsb_max="100"
                                     app:rsb_mode="single"
-                                    app:rsb_indicator_background_color="@color/tomato"
+                                    app:rsb_indicator_background_color="@color/gray200"
+                                    app:rsb_indicator_text_color="@color/black"
                                     app:rsb_progress_height="4dp"
                                     app:rsb_progress_radius="4dp"
                                     app:rsb_tick_mark_mode="number"
@@ -376,6 +352,8 @@
                                     app:rsb_indicator_width="30dp"
                                     app:rsb_indicator_height="30dp"
                                     android:id="@+id/largo"
+                                    app:rsb_progress_color="@color/green400"
+
                                     />
 
                                 <TextView
@@ -389,7 +367,8 @@
                                     android:layout_height="wrap_content"
                                     app:rsb_max="100"
                                     app:rsb_mode="single"
-                                    app:rsb_indicator_background_color="@color/tomato"
+                                    app:rsb_indicator_background_color="@color/gray200"
+                                    app:rsb_indicator_text_color="@color/black"
                                     app:rsb_progress_height="4dp"
                                     app:rsb_progress_radius="4dp"
                                     app:rsb_tick_mark_mode="number"
@@ -397,6 +376,7 @@
                                     app:rsb_indicator_width="30dp"
                                     app:rsb_indicator_height="30dp"
                                     android:id="@+id/peso"
+                                    app:rsb_progress_color="@color/green400"
                                     />
                     </LinearLayout>
 
@@ -427,18 +407,3 @@
 
 
 </ScrollView>
-<!--
-<com.airbnb.lottie.LottieAnimationView
-                        android:layout_gravity="end"
-                        android:background="@color/tomato"
-                        app:lottie_rawRes="@raw/introrappi"
-                        android:visibility="visible"
-                        app:lottie_autoPlay="true"
-                        app:lottie_loop="true"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-
-
-                        />
-
--->
