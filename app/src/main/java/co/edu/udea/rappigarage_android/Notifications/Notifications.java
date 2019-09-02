@@ -1,4 +1,4 @@
-package co.edu.udea.rappigarage_android.User;
+package co.edu.udea.rappigarage_android.Notifications;
 
 import android.content.Context;
 import android.net.Uri;
@@ -10,23 +10,25 @@ import android.view.ViewGroup;
 
 import co.edu.udea.rappigarage_android.R;
 
-public class Profile extends Fragment {
+public class Notifications extends Fragment {
 
-
-    public Profile() {
+    public Notifications() {
         // Required empty public constructor
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        return inflater.inflate(R.layout.fragment_notifications, container, false);
     }
 
 

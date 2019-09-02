@@ -85,12 +85,6 @@ public class ProductFormModel implements IProductForm.IInteractor, ICategoryImpl
     }
 
 
-    public void publishPhotos(ArrayList<String> uriImages) {
-
-
-
-
-    }
 
 
 
