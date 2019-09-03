@@ -1,8 +1,11 @@
 package co.edu.udea.rappigarage_android.Home;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import co.edu.udea.rappigarage_android.GlobalServices.Category.Category;
+import co.edu.udea.rappigarage_android.Home.API.ProductSummary;
+import co.edu.udea.rappigarage_android.Home.API.Search;
 
 public class HomePresenter implements  IHome.IPresenter, IHome.CompleteListenerCategories{
 
@@ -17,7 +20,7 @@ public class HomePresenter implements  IHome.IPresenter, IHome.CompleteListenerC
 
     @Override
     public void onDestroy() {
-
+        view=null;
     }
 
     @Override
@@ -29,7 +32,11 @@ public class HomePresenter implements  IHome.IPresenter, IHome.CompleteListenerC
     }
 
     @Override
-    public void getProducts(int first, int limit) {
+    public void getProducts(String query, int first, int limit) {
+        if(view !=null){
+            view.displayLoader(true);
+            interactor.getProducts(query,first,limit);
+        }
 
     }
 
@@ -43,5 +50,18 @@ public class HomePresenter implements  IHome.IPresenter, IHome.CompleteListenerC
     public void onErrorCategories(String error) {
         view.displayLoader(false);
         view.displayError(error);
+    }
+
+    @Override
+    public void onSuccessSearch(List<Search> productSummaries) {
+        view.displayLoader(false);
+        view.displayProducts(productSummaries);
+    }
+
+    @Override
+    public void onErrorSearch(String error) {
+        view.displayLoader(false);
+        view.displayError(error);
+
     }
 }

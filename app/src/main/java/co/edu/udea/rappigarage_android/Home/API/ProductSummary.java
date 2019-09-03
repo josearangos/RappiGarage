@@ -9,18 +9,9 @@ import co.edu.udea.rappigarage_android.Product.Publish.API.PhotoSource;
 
 public class ProductSummary {
 
-    @SerializedName("id")
+    @SerializedName("search")
     @Expose
-    private Integer id;
-    @SerializedName("price")
-    @Expose
-    private Integer price;
-    @SerializedName("name")
-    @Expose
-    private String name;
-    @SerializedName("photos")
-    @Expose
-    private List<PhotoSource> photos = null;
+    private List<Search> search = null;
 
     /**
      * No args constructor for use in serialization
@@ -31,49 +22,20 @@ public class ProductSummary {
 
     /**
      *
-     * @param photos
-     * @param id
-     * @param price
-     * @param name
+     * @param search
      */
-    public ProductSummary(Integer id, Integer price, String name, List<PhotoSource> photos) {
+    public ProductSummary(List<Search> search) {
         super();
-        this.id = id;
-        this.price = price;
-        this.name = name;
-        this.photos = photos;
+        this.search = search;
     }
 
-    public Integer getId() {
-        return id;
+    public List<Search> getSearch() {
+        return search;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setSearch(List<Search> search) {
+        this.search = search;
     }
 
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<PhotoSource> getPhotos() {
-        return photos;
-    }
-
-    public void setPhotos(List<PhotoSource> photos) {
-        this.photos = photos;
-    }
 
 }

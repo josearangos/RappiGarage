@@ -14,15 +14,16 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import co.edu.udea.rappigarage_android.Home.API.ProductSummary;
+import co.edu.udea.rappigarage_android.Home.API.Search;
 import co.edu.udea.rappigarage_android.R;
 
 public class ProductSummaryAdapter extends RecyclerView.Adapter<ProductSummaryAdapter.Holderview> {
 
 
-    private ArrayList<ProductSummary> productSummaries;
+    private List<Search> productSummaries;
     private Context context;
 
-    public ProductSummaryAdapter(ArrayList<ProductSummary> productSummaries, Context context) {
+    public ProductSummaryAdapter(List<Search> productSummaries, Context context) {
         this.productSummaries = productSummaries;
         this.context = context;
     }
@@ -30,8 +31,8 @@ public class ProductSummaryAdapter extends RecyclerView.Adapter<ProductSummaryAd
     @NonNull
     @Override
     public Holderview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View layaout = LayoutInflater.from(parent.getContext()).inflate(R.layout.summaryproduct,parent,false);
-        return new Holderview(layaout);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.summaryproduct,parent,false);
+        return new Holderview(view);
     }
 
     @Override
@@ -51,13 +52,13 @@ public class ProductSummaryAdapter extends RecyclerView.Adapter<ProductSummaryAd
         return productSummaries.size();
     }
 
-    public void setFilter(ArrayList<ProductSummary> summaries){
+    public void setFilter(List<Search> summaries){
         productSummaries = new ArrayList<>();
         productSummaries.addAll(summaries);
         notifyDataSetChanged();
     }
 
-    class Holderview extends RecyclerView.ViewHolder{
+    public static class Holderview extends RecyclerView.ViewHolder{
         ImageView imageProduct;
         TextView title,price;
 

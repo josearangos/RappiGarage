@@ -8,17 +8,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import co.edu.udea.rappigarage_android.GlobalServices.Category.Category;
 import co.edu.udea.rappigarage_android.Home.API.ProductSummary;
+import co.edu.udea.rappigarage_android.Home.API.Search;
+import co.edu.udea.rappigarage_android.Home.Adapters.ProductSummaryAdapter;
 import co.edu.udea.rappigarage_android.Product.Publish.ProductFormActivity;
 import co.edu.udea.rappigarage_android.R;
 
@@ -27,6 +33,11 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
     private ProgressBar progressBar;
     HashMap<String,Integer> categoriesList ;
     private ChipGroup tagGroup_categories;
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+    private ArrayList<ProductSummary> productSummaries;
+    private ProductSummaryAdapter adapter;
+
 
     //MVP
     private IHome.IPresenter presenter;
@@ -51,6 +62,8 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         initializeViews(view);
         this.presenter.getCategories();
+        this.presenter.getProducts("camisa",0,10);
+
         return view;
     }
 
@@ -67,6 +80,10 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
     public void initializeViews(View view ) {
         this.tagGroup_categories = view.findViewById(R.id.tagGroup_categories);
         progressBar = (ProgressBar)view.findViewById(R.id.progressBar);
+        recyclerView =view.findViewById(R.id.productList);
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
     }
 
     @Override
@@ -81,14 +98,18 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
         }
     }
 
-    @Override
-    public void displayProducts(ArrayList<ProductSummary> productSummaries) {
 
+
+    @Override
+    public void displayProducts(List<Search> productSummaries) {
+        adapter = new ProductSummaryAdapter(productSummaries,getContext());
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void displayError(String error) {
-
+        System.out.println("ERROR"+error);
     }
 
     @Override
@@ -120,11 +141,13 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
 
     @Override
     public boolean onQueryTextSubmit(String query) {
+        this.presenter.getProducts(query,0,10);
         return true;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
+        this.presenter.getProducts(newText,0,10);
         return true;
     }
 }
