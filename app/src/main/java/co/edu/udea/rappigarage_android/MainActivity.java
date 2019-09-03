@@ -2,6 +2,7 @@ package co.edu.udea.rappigarage_android;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView menu;
     private Fragment fragment;
     private FragmentManager fragmentManager;
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     public  void initializeViews(){
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         Intent intentProductForm = new Intent(this, ProductFormActivity.class);
         fragmentManager = getSupportFragmentManager();
         fragment = new Home();

@@ -2,16 +2,23 @@ package co.edu.udea.rappigarage_android.Home;
 
 import java.util.ArrayList;
 
+import co.edu.udea.rappigarage_android.GlobalServices.APIClient;
 import co.edu.udea.rappigarage_android.GlobalServices.Category.Category;
 import co.edu.udea.rappigarage_android.GlobalServices.Category.CategoryService;
 import co.edu.udea.rappigarage_android.GlobalServices.Category.ICategoryImplement;
+import co.edu.udea.rappigarage_android.Home.API.IProduct;
+import co.edu.udea.rappigarage_android.Home.API.ProductSummary;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeModel implements  IHome.IInteractor , ICategoryImplement.CompleteListener {
 
     private IHome.CompleteListenerCategories completeListenerCategories;
     private CategoryService categoryService;
     private IHome.IPresenter presenter;
-
+    private ArrayList<ProductSummary> productSummaries;
+    private IProduct apiInterface;
 
     public HomeModel(IHome.CompleteListenerCategories completeListenerCategories,IHome.IPresenter presenter) {
         this.completeListenerCategories = completeListenerCategories;
@@ -26,8 +33,27 @@ public class HomeModel implements  IHome.IInteractor , ICategoryImplement.Comple
     }
 
     @Override
-    public void getProducts(int first, int limit) {
+    public void getProducts(String query, int first, int limit) {
+        apiInterface = APIClient.getApiClient().create(IProduct.class);
+        Call<ProductSummary> call = apiInterface.getProductsforQuery(query,first,limit);
 
+        call.enqueue(new Callback<ProductSummary>() {
+            @Override
+            public void onResponse(Call<ProductSummary> call, Response<ProductSummary> response) {
+                if(response.isSuccessful()){
+                    presenter.onSuccessSearch(response.body().getSearch());
+                    System.out.println("HOLA"+response.body().getSearch().get(0).getName());
+                }else{
+                    presenter.onErrorSearch(response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductSummary> call, Throwable t) {
+                presenter.onErrorSearch(t.getMessage());
+
+            }
+        });
     }
 
     @Override
