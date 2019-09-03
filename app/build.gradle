@@ -43,6 +43,10 @@ dependencies {
     //Animations
     implementation "com.airbnb.android:lottie:3.0.7"
 
+    //Loading images
+    implementation 'com.facebook.fresco:fresco:2.0.0'
+
+
     //RangeSeekBar
     implementation 'com.github.Jay-Goo:RangeSeekBar:v3.0.0'
 

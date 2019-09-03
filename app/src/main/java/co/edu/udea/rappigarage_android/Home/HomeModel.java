@@ -42,7 +42,6 @@ public class HomeModel implements  IHome.IInteractor , ICategoryImplement.Comple
             public void onResponse(Call<ProductSummary> call, Response<ProductSummary> response) {
                 if(response.isSuccessful()){
                     presenter.onSuccessSearch(response.body().getSearch());
-                    System.out.println("HOLA"+response.body().getSearch().get(0).getName());
                 }else{
                     presenter.onErrorSearch(response.message());
                 }

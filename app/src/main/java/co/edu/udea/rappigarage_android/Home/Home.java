@@ -19,6 +19,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import co.edu.udea.rappigarage_android.GlobalServices.Category.Category;
@@ -62,7 +63,7 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         initializeViews(view);
         this.presenter.getCategories();
-        this.presenter.getProducts("camisa",0,10);
+        this.presenter.getProducts("",0,10);
 
         return view;
     }
@@ -81,7 +82,7 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
         this.tagGroup_categories = view.findViewById(R.id.tagGroup_categories);
         progressBar = (ProgressBar)view.findViewById(R.id.progressBar);
         recyclerView =view.findViewById(R.id.productList);
-        layoutManager = new LinearLayoutManager(getContext());
+        layoutManager = new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
     }
@@ -147,6 +148,7 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
 
     @Override
     public boolean onQueryTextChange(String newText) {
+
         this.presenter.getProducts(newText,0,10);
         return true;
     }

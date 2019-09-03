@@ -1,12 +1,15 @@
 package co.edu.udea.rappigarage_android.Home.Adapters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +40,11 @@ public class ProductSummaryAdapter extends RecyclerView.Adapter<ProductSummaryAd
 
     @Override
     public void onBindViewHolder(@NonNull Holderview holder, int position) {
+
+            if(productSummaries.get(position).getPhotos().size() >0){
+                Uri uri = Uri.parse(productSummaries.get(position).getPhotos().get(0).getSource());
+                holder.imageProduct.setImageURI(uri);
+            }
             holder.title.setText(productSummaries.get(position).getName());
             holder.price.setText(String.valueOf(productSummaries.get(position).getPrice()));
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -59,12 +67,12 @@ public class ProductSummaryAdapter extends RecyclerView.Adapter<ProductSummaryAd
     }
 
     public static class Holderview extends RecyclerView.ViewHolder{
-        ImageView imageProduct;
+        SimpleDraweeView imageProduct;
         TextView title,price;
 
         Holderview(View itemView){
             super(itemView);
-            imageProduct = (ImageView)itemView.findViewById(R.id.imageProduct);
+            imageProduct = (SimpleDraweeView)itemView.findViewById(R.id.imageProduct);
             title = (TextView)itemView.findViewById(R.id.title);
             price = (TextView)itemView.findViewById(R.id.price);
 
