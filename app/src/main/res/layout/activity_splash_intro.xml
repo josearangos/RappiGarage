@@ -9,14 +9,14 @@
 
 
 <com.airbnb.lottie.LottieAnimationView
-                        android:layout_gravity="end"
-                        app:lottie_rawRes="@raw/introrappi"
-                        android:visibility="visible"
-                        app:lottie_autoPlay="true"
-                        app:lottie_loop="true"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-
+    android:layout_gravity="end"
+    app:lottie_rawRes="@raw/introrappi"
+    android:visibility="visible"
+    app:lottie_autoPlay="true"
+    app:lottie_loop="false"
+    android:id="@+id/introrappi"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
 
     tools:ignore="MissingConstraints" />
 

@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
 
+
         Intent intentProductForm = new Intent(this, ProductFormActivity.class);
         fragmentManager = getSupportFragmentManager();
         fragment = new Home();
