@@ -6,10 +6,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="10dp"
+    android:padding="10dp"
+    app:cardCornerRadius="5dp"
     app:cardUseCompatPadding="true"
-    android:elevation="20dp"
-
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,12 +21,16 @@
             android:layout_height="130dp"
             fresco:placeholderImage="@drawable/ic_cloud"
             />
+
         <TextView
-            android:text="Gafas Carraca"
-            android:layout_marginTop="10dp"
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/title"
+            android:layout_marginTop="10dp"
+            android:text="Gafas Carraca"
+            android:paddingHorizontal="10dp"
+            android:textColor="@color/gray500"
+            android:textSize="18sp"
             />
         <TextView
             android:text="$150.000"
@@ -35,6 +38,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/price"
+            android:paddingHorizontal="10dp"
+            android:textColor="@color/gray900"
+            android:textSize="16sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
             />
     </LinearLayout>
 
