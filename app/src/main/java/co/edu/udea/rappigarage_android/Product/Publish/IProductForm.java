@@ -5,6 +5,7 @@ import android.view.View;
 import java.util.ArrayList;
 
 import co.edu.udea.rappigarage_android.GlobalServices.Category.Category;
+import co.edu.udea.rappigarage_android.Product.Publish.API.PhotoModels.Result;
 import co.edu.udea.rappigarage_android.Product.Publish.API.Product;
 import co.edu.udea.rappigarage_android.Product.Publish.API.ProductResponse;
 
@@ -18,24 +19,21 @@ public interface IProductForm {
         void displayError(String error);
         void publishProduct();
         void publishProductResponse(ProductResponse productResponse);
-
-
+        void displaySuccesFull(String ms);
     }
 
     interface IPresenter {
         void onDestroy();
         void getCategories();
-        void publishProduct(Product product);
+        void publishProduct(Product product,ArrayList<String> urisPhotos);
+        void onSuccessPublish(ProductResponse productResponse);
+        void onErrorPublish(String error);
     }
 
     interface IInteractor{
         void getCategories();
-        void publishProduct(Product product);
-    }
+        void publishProduct(Product product,ArrayList<String> urisPhotos);
 
-    interface CompleteListenerPublish {
-        void onSuccessPublish(ProductResponse productResponse);
-        void onErrorPublish(String error);
     }
 
 
@@ -43,4 +41,7 @@ public interface IProductForm {
         void onSuccessCategories(ArrayList<Category> categories);
         void onErrorCategories(String error);
     }
+
+
+
 }

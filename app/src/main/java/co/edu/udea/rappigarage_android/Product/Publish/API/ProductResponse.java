@@ -5,6 +5,8 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import co.edu.udea.rappigarage_android.Product.Publish.API.PhotoModels.Photo;
+
 public class ProductResponse {
 
     @SerializedName("id")

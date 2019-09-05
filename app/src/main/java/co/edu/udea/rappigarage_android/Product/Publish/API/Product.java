@@ -10,6 +10,11 @@ public class Product {
     @Expose
     private Double price;
 
+    @SerializedName("cityName")
+    @Expose
+    private String cityName;
+
+
     @SerializedName("name")
     @Expose
     private String name;
@@ -52,7 +57,7 @@ public class Product {
 
     @SerializedName("photos")
     @Expose
-    private List<Photo> photos = null;
+    private List<PhotoSource> photos = null;
 
     /**
      * No args constructor for use in serialization
@@ -62,7 +67,7 @@ public class Product {
     }
 
     /**
-     *
+     * @param cityName
      * @param photos
      * @param price
      * @param location
@@ -77,7 +82,7 @@ public class Product {
      * @param availability
      * @param availableQuantity
      */
-    public Product(Double price, String name, String description, Integer availableQuantity, String warranty, String publishDate, Boolean availability, Measures measures, Integer cityId, Integer userId, String condition, Location location, List<Photo> photos) {
+    public Product(Double price, String name, String description, Integer availableQuantity, String warranty, String publishDate, Boolean availability, Measures measures, Integer cityId, Integer userId, String condition,String cityName, Location location, List<PhotoSource> photos) {
         super();
         this.price = price;
         this.name = name;
@@ -92,6 +97,15 @@ public class Product {
         this.condition = condition;
         this.location = location;
         this.photos = photos;
+        this.cityName = cityName;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 
     public Double getPrice() {
@@ -190,11 +204,11 @@ public class Product {
         this.location = location;
     }
 
-    public List<Photo> getPhotos() {
+    public List<PhotoSource> getPhotos() {
         return photos;
     }
 
-    public void setPhotos(List<Photo> photos) {
+    public void setPhotos(List<PhotoSource> photos) {
         this.photos = photos;
     }
 

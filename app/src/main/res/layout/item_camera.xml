@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <com.jackandphantom.circularimageview.RoundedImage
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:rounded_radius="50"
+            android:id="@+id/image" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_gravity="top |right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="X"
+            app:iconTint="@color/tomato"
+            app:fabSize="mini"
+            android:id="@+id/delete"
+            app:iconTintMode="@null"
+            android:src="@android:drawable/ic_delete"
+            android:backgroundTint="#64cbac"
+            />
+
+    </FrameLayout>
+
+</LinearLayout>

@@ -1,75 +1,134 @@
 package co.edu.udea.rappigarage_android.Product.Publish;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.button.MaterialButton;
-import android.support.design.chip.Chip;
-import android.support.design.chip.ChipGroup;
-import android.support.design.widget.TextInputEditText;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.Toast;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.fxn.pix.Options;
+import com.fxn.pix.Pix;
+import com.fxn.utility.ImageQuality;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.ui.PlacePicker;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.PlacesClient;
-import com.google.android.libraries.places.internal.ei;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
-import com.jesusm.holocircleseekbar.lib.HoloCircleSeekBar;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.textfield.TextInputEditText;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
+import com.jackandphantom.circularimageview.RoundedImage;
+import com.jaygoo.widget.RangeSeekBar;
 
-
+import java.io.File;
 import java.io.IOException;
-import java.nio.FloatBuffer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import co.edu.udea.rappigarage_android.GlobalServices.Category.Category;
+import co.edu.udea.rappigarage_android.Product.Adapters.ImagesAdapter;
 import co.edu.udea.rappigarage_android.Product.Publish.API.Location;
 import co.edu.udea.rappigarage_android.Product.Publish.API.Measures;
-import co.edu.udea.rappigarage_android.Product.Publish.API.Photo;
+import co.edu.udea.rappigarage_android.Product.Publish.API.PhotoSource;
 import co.edu.udea.rappigarage_android.Product.Publish.API.Product;
 import co.edu.udea.rappigarage_android.Product.Publish.API.ProductResponse;
 import co.edu.udea.rappigarage_android.R;
 
 
-public class ProductFormActivity extends AppCompatActivity implements IProductForm.IView   {
+public class ProductFormActivity extends AppCompatActivity implements IProductForm.IView  {
 
-    HashMap<String,Integer> categoriesList;
+    HashMap<String,Integer> categoriesList ;
+    private  String cityName = "";
+    private String warrantyProduct  = "";
+    Measures measures;
+    //Images
+    private RecyclerView listImages ;
+    ArrayList<String> urisPhotos = new ArrayList<>(); // Uris images
+    ImagesAdapter imagesAdapter ;
 
-    String morcilla ="";
+    String morcilla ="AIzaSyBS7E706CIUuXJmAefzTa7kXXEyPWzRJ6o";
     PlacesClient placesClient;
     Double latitude,longitude =0.0;
+    final int  PLACE_PICKER_REQUEST = 1;
+    //Views
+    private Button sendPhotos;
+    private RoundedImage loadingImage ;
+    private  Button location;
+    private ChipGroup tagGroup_categories,warranty;
+    private Toolbar toolbar;
+    private TextInputEditText price;
+    private TextInputEditText name;
+    private TextInputEditText description;
+    private ElegantNumberButton availableQuantity;
+    private Switch condition;
+    private RangeSeekBar pickerWidth;
+    private RangeSeekBar pickerHeigth;
+    private RangeSeekBar pickerLarge;
+    private RangeSeekBar pickerWeigth;
+    private ProgressBar progressBar;
+    private MaterialButton publishBtn;
+
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    //MVP
+    private IProductForm.IPresenter presenter;
+
+    public void addImagesSlider(){
+        // add a divider after each item for more clarity
+        listImages.addItemDecoration(new DividerItemDecoration(ProductFormActivity.this, LinearLayoutManager.HORIZONTAL));
+        imagesAdapter = new ImagesAdapter(getUrisPhotos(), getApplicationContext());
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(ProductFormActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        listImages.setLayoutManager(horizontalLayoutManager);
+        listImages.setAdapter(imagesAdapter);
+        imagesAdapter.notifyDataSetChanged();
+    }
+
+    public ArrayList<String> getUrisPhotos() {
+        return urisPhotos;
+    }
+
+    public void setUrisPhotos(ArrayList<String> urisPhotos) {
+        this.urisPhotos = urisPhotos;
+    }
 
     public Double getLatitude() {
         return latitude;
@@ -87,24 +146,6 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
         this.longitude = longitude;
     }
 
-    //Views
-    private  Button location;
-    private ChipGroup tagGroup_categories,warranty;
-    private Toolbar toolbar;
-    private TextInputEditText price;
-    private TextInputEditText name;
-    private TextInputEditText description;
-    private ElegantNumberButton availableQuantity;
-    private Switch condition;
-    private HoloCircleSeekBar pickerWidth;
-    private HoloCircleSeekBar pickerHeigth;
-    private HoloCircleSeekBar pickerLarge;
-    private HoloCircleSeekBar pickerWeigth;
-    private ProgressBar progressBar;
-    private MaterialButton publishBtn;
-
-    //MVP
-    private IProductForm.IPresenter presenter;
 
     public ProductFormActivity() {
         this.presenter = new ProductFormPresenter(this);
@@ -119,7 +160,7 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
         this.presenter = new ProductFormPresenter(this);
         this.presenter.getCategories();
         settingGooglePlaces();
-
+        requestPermission();
 
 
     }
@@ -136,7 +177,6 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
 
     @Override
     public void initializeViews() {
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -149,12 +189,23 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
             }
         });
 
+
+        //List images
+        this.listImages = (RecyclerView)findViewById(R.id.imgList);
+
+
         //Initialice views
+        this.loadingImage= (RoundedImage)findViewById(R.id.loadingImage);
         this.progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        this.pickerWidth = (HoloCircleSeekBar) findViewById(R.id.pickerWidth);
-        this.pickerHeigth = (HoloCircleSeekBar) findViewById(R.id.pickerHeigth);
-        this.pickerLarge = (HoloCircleSeekBar) findViewById(R.id.pickerLarge);
-        this.pickerWeigth = (HoloCircleSeekBar) findViewById(R.id.pickerWeigth);
+        this.pickerWidth = (RangeSeekBar) findViewById(R.id.ancho);
+        this.pickerHeigth = (RangeSeekBar) findViewById(R.id.alto);
+        this.pickerLarge = (RangeSeekBar) findViewById(R.id.largo);
+        this.pickerWeigth = (RangeSeekBar) findViewById(R.id.peso);
+        pickerWidth.setIndicatorTextDecimalFormat("0");
+        pickerHeigth.setIndicatorTextDecimalFormat("0");
+        pickerLarge.setIndicatorTextDecimalFormat("0");
+        pickerWeigth.setIndicatorTextDecimalFormat("0");
+
         this.condition = (Switch) findViewById(R.id.condition);
         this.availableQuantity = (ElegantNumberButton) findViewById(R.id.availableQuantity);
         this.description = (TextInputEditText) findViewById(R.id.description);
@@ -178,21 +229,23 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
                     Chip chip =(Chip)tagGroup_categories.getChildAt(i);
                     if(chip.isChecked()){
                         tagsCheckedId.add(getIdCategory(String.valueOf(chip.getText())));
+
                     }
 
                 }
                 //imprimo los ids de las categorias seleccionadas
-                Toast.makeText(getApplicationContext(),String.valueOf(tagsCheckedId.toString()),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),String.valueOf(tagsCheckedId.toString()),Toast.LENGTH_SHORT).show();
                 //PUBLICAR PRODUCTO SIN IMAGEN
                 publishProduct();
             }
         });
 
 
+
+
+
+
     }
-
-
-
 
     @Override
     public void getCategories(ArrayList<Category> categories) {
@@ -203,6 +256,7 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
             Chip chip = (Chip)inflaterCategories.inflate(R.layout.chip_item,null,false);
             chip.setText(category.getName());
             this.categoriesList.put(category.getName(),category.getId());
+
             this.tagGroup_categories.addView(chip);
 
         }
@@ -233,28 +287,37 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
 
     @Override
     public void publishProduct() {
-        List< Photo> photos = new ArrayList<Photo>();
-        Location location = new Location(getLatitude(),getLongitude());
-        Measures measures =new Measures(this.pickerWidth.getValue(),this.pickerHeigth.getValue(),this.pickerWeigth.getValue(),this.pickerLarge.getValue());
-        photos.add(new Photo("https://avatars0.githubusercontent.com/u/13352055?s=460&v=4"));
 
+        //if(validationForm() != false) {
 
-        Product product = new Product(
-                Double.valueOf(this.price.getText().toString()),
-                this.name.getText().toString(),
-                this.description.getText().toString(),
-                Integer.valueOf(this.availableQuantity.getNumber()),
-                getTextWarrantyProduct(this.warranty),
-                getCurrentUTC(),
-                true,
-                measures,
-                3,
-                1,
-                condition(),
-                location,
-                photos);
+            Location location = new Location(getLatitude(), getLongitude());
+            measures = new Measures(
+                    Integer.valueOf((int) this.pickerWidth.getLeftSeekBar().getProgress()),
+                    Integer.valueOf((int) this.pickerHeigth.getLeftSeekBar().getProgress()),
+                    Integer.valueOf((int) this.pickerWeigth.getLeftSeekBar().getProgress()),
+                    Integer.valueOf((int) this.pickerLarge.getLeftSeekBar().getProgress()));
+            Product product = new Product(
+                    Double.valueOf(this.price.getText().toString()),
+                    this.name.getText().toString(),
+                    this.description.getText().toString(),
+                    Integer.valueOf(this.availableQuantity.getNumber()),
+                    getTextWarrantyProduct(this.warranty),
+                    getCurrentUTC(),
+                    true,
+                    measures,
+                    0,
+                    1,
+                    condition(),
+                    getCityName(),
+                    location,
+                    null);
 
-        this.presenter.publishProduct(product);
+            Toast.makeText(getApplicationContext(),this.getCityName(),Toast.LENGTH_SHORT).show();
+            this.presenter.publishProduct(product,getUrisPhotos());
+       // }else{
+        ///   Toast.makeText(getApplicationContext(),"complete el formulario",Toast.LENGTH_LONG).show();
+
+        //}
     }
 
     public String getCurrentUTC(){
@@ -269,6 +332,36 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
     @Override
     public void publishProductResponse(ProductResponse productResponse) {
         Toast.makeText(getApplicationContext(),String.valueOf(productResponse.getId()),Toast.LENGTH_LONG).show();
+    }
+
+
+    public boolean validationForm(){
+        Boolean price, name,description,location,category,Measures =false, photos = false;
+        price = this.price.getText().toString().isEmpty();
+        name = this.name.getText().toString().isEmpty();
+        description = this.description.getText().toString().isEmpty();
+        location = this.getCityName().isEmpty();
+        photos = getUrisPhotos().isEmpty();
+
+
+        category = this.categoriesList.isEmpty();
+        if(measures!=null){
+            if(measures.getHeigth() == 0 || measures.getLarge() == 0
+            || measures.getWeigth() == 0 || measures.getWidth() == 0 ){
+                Measures = true;
+            }
+
+        }
+        if (price || name || description || location || category || Measures || photos ){
+            return false;
+        }
+        return true;
+    }
+
+
+    @Override
+    public void displaySuccesFull(String ms) {
+        Toast.makeText(getApplicationContext(),ms,Toast.LENGTH_LONG).show();
     }
 
     public Integer getIdCategory(String name){
@@ -287,13 +380,14 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
         autocompleteSupportFragment.setCountry("CO");
 
         autocompleteSupportFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+
             @Override
             public void onPlaceSelected(@NonNull Place place) {
-
+                setCityName("");
                 try {
                     setLatitude(place.getLatLng().latitude);
                     setLongitude(place.getLatLng().longitude);
-                    String city = getCityNameByCoordinates(place.getLatLng().latitude,place.getLatLng().longitude);
+                    setCityName(getCityNameByCoordinates(place.getLatLng().latitude,place.getLatLng().longitude));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -328,6 +422,70 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
         }
     }
 
+
+    public void loadingImage(View view) {
+
+        Options options = Options.init()
+                .setRequestCode(100)
+                .setCount(10)
+                .setFrontfacing(false)
+                .setImageQuality(ImageQuality.LOW)
+                .setPreSelectedUrls(urisPhotos)
+                .setScreenOrientation(Options.SCREEN_ORIENTATION_PORTRAIT)
+                .setPath("/rappiGarage/images");
+        options.setPreSelectedUrls(urisPhotos);
+        Pix.start(ProductFormActivity.this, options);
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case (100): {
+                if (resultCode == RESULT_OK) {
+                    setUrisPhotos(data.getStringArrayListExtra(Pix.IMAGE_RESULTS));
+                    addImagesSlider();
+                }
+            }
+            break;
+            case (PLACE_PICKER_REQUEST):{
+                if(resultCode == RESULT_OK){
+
+
+                }
+            }
+
+
+        }
+    }
+
+
+    public void requestPermission(){
+        PermissionListener permissionlistener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                Toast.makeText(ProductFormActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onPermissionDenied(List<String> deniedPermissions) {
+                Toast.makeText(ProductFormActivity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+
+        };
+
+        TedPermission.with(this)
+                .setPermissionListener(permissionlistener)
+                .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
+                .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_NETWORK_STATE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+                .check();
+    }
 
 
 
