@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         Intent intentProductForm = new Intent(this, ProductFormActivity.class);
         fragmentManager = getSupportFragmentManager();
         fragment = new Home();
