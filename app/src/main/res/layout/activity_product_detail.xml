@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Product.Detail.ProductDetail"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,12 +26,112 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="<<Product Name>>" />
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:paddingHorizontal="10dp"
+            android:text="$150.000"
+            android:textColor="@color/gray900"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Detalle de producto"/>
+        <TextView
+            android:id="@+id/quantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="<<Quantity>>" />
+
         <TextView
             android:id="@+id/productDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="<<Product Description>>" />
+        <TextView
+            android:id="@+id/productLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="<<Ubicación de producto>>" />
+        <TextView
+            android:id="@+id/publishedAt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="<<Publicado el día: 66/66/66>>" />
+        <TextView
+            android:id="@+id/warrantly"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Garantía de 666 meses" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Categories" />
 
+        <LinearLayout
+            android:layout_width="276dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:orientation="horizontal">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/userImage"
+                android:layout_width="85dp"
+                android:layout_height="match_parent"
+                fresco:placeholderImage="@drawable/ic_cloud" />
+
+            <LinearLayout
+                android:layout_width="191dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingHorizontal="10dp"
+                    android:text="Johan Orlando Puentes"
+                    android:textColor="@color/gray500"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/userLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:paddingHorizontal="10dp"
+                    android:text="Apartadó"
+                    android:textColor="@color/gray900"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"></LinearLayout>
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="216dp"
+            android:layout_height="wrap_content"
+            android:text="Comprar" />
+
+        <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+            android:id="@+id/selectedQuantity"
+            android:layout_width="76dp"
+            android:layout_height="27dp"
+            app:initialNumber="1" />
     </LinearLayout>
 
 </ScrollView>
