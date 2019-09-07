@@ -6,6 +6,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class Product {
 
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+
     @SerializedName("price")
     @Expose
     private Double price;
@@ -98,6 +102,35 @@ public class Product {
         this.location = location;
         this.photos = photos;
         this.cityName = cityName;
+    }
+
+
+    public Product(Integer id, Double price, String name, String description, Integer availableQuantity, String warranty, String publishDate, Boolean availability, Measures measures, Integer cityId, Integer userId, String condition,String cityName, Location location, List<PhotoSource> photos) {
+        super();
+        this.id= id;
+        this.price = price;
+        this.name = name;
+        this.description = description;
+        this.availableQuantity = availableQuantity;
+        this.warranty = warranty;
+        this.publishDate = publishDate;
+        this.availability = availability;
+        this.measures = measures;
+        this.cityId = cityId;
+        this.userId = userId;
+        this.condition = condition;
+        this.location = location;
+        this.photos = photos;
+        this.cityName = cityName;
+    }
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getCityName() {
