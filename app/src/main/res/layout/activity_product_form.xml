@@ -17,8 +17,10 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             >
+
             <include android:id="@+id/toolbar"
                 layout="@layout/tool_bar"/>
+
             <LinearLayout
                 android:weightSum="1"
                 android:orientation="vertical"
@@ -385,8 +387,10 @@
                         android:id="@+id/publishBtn"
                         android:layout_height="wrap_content"
                         android:text="@string/publish"
+                        android:onClick="publishProductClick"
                         style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                        android:layout_width="match_parent" />
+                        android:layout_width="match_parent"
+                        tools:ignore="OnClick" />
 
                 </LinearLayout>
 

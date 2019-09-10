@@ -11,6 +11,7 @@
     app:cardUseCompatPadding="true"
     >
     <LinearLayout
+        android:background="?android:selectableItemBackground"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="wrap_content">
@@ -31,6 +32,9 @@
             android:paddingHorizontal="10dp"
             android:textColor="@color/gray500"
             android:textSize="18sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:scrollHorizontally="true"
             />
         <TextView
             android:text="$150.000"

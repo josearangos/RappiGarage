@@ -1,5 +1,7 @@
 package co.edu.udea.rappigarage_android.Home;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,21 +28,39 @@ import co.edu.udea.rappigarage_android.GlobalServices.Category.Category;
 import co.edu.udea.rappigarage_android.Home.API.ProductSummary;
 import co.edu.udea.rappigarage_android.Home.API.Search;
 import co.edu.udea.rappigarage_android.Home.Adapters.ProductSummaryAdapter;
+import co.edu.udea.rappigarage_android.Home.Adapters.ProductSummaryAdapterPro;
+import co.edu.udea.rappigarage_android.Home.Filters.FiltersActivity;
 import co.edu.udea.rappigarage_android.Product.Publish.ProductFormActivity;
 import co.edu.udea.rappigarage_android.R;
 
-public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener {
+    public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener {
 
+
+
+    int firstVisibleItem, visibleItemCount, totalItemCount;
+    Intent intent;
     private ProgressBar progressBar;
     HashMap<String,Integer> categoriesList ;
     private ChipGroup tagGroup_categories;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private ArrayList<ProductSummary> productSummaries;
-    private ProductSummaryAdapter adapter;
+    //private ProductSummaryAdapter adapter;
+    private String query = "";
+
+    private  List<Search> items = new ArrayList<>();
+    ProductSummaryAdapterPro adapterPro ;
 
 
-    //MVP
+
+        public String getQuery() {
+            return query;
+        }
+
+        public void setQuery(String query) {
+            this.query = query;
+        }
+
+        //MVP
     private IHome.IPresenter presenter;
 
     public Home() {
@@ -62,8 +82,11 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
         this.presenter = new HomePresenter(this);
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         initializeViews(view);
+
         this.presenter.getCategories();
-        this.presenter.getProducts("",0,10);
+        this.presenter.getProducts(getQuery(),0,10);
+
+
 
         return view;
     }
@@ -82,10 +105,46 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
         this.tagGroup_categories = view.findViewById(R.id.tagGroup_categories);
         progressBar = (ProgressBar)view.findViewById(R.id.progressBar);
         recyclerView =view.findViewById(R.id.productList);
+
+        items.clear();
         layoutManager = new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-    }
+        adapterPro = new ProductSummaryAdapterPro(recyclerView,getActivity(),items);
+        recyclerView.setAdapter(adapterPro);
+
+        adapterPro.setLoadMore(new ILoadMore() {
+            @Override
+            public void onLoadMode() {
+                if(items.size()<= items.size()){//Maximo de items
+                    items.add(null);
+                    adapterPro.notifyItemInserted(items.size()-1);
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            items.remove(items.size()-1);
+                            adapterPro.notifyItemRemoved(items.size());
+                            int index = items.size();
+                            int end = index +2;
+
+                            //LLENA LISTA DE ITEMS CON EL METODO ADD O ADDALL
+                            presenter.getProducts(getQuery(),index,end);
+                        }
+                    },5000); //tiempo de carga
+
+
+                }else{
+                    Toast.makeText(getContext(),"NO hay mas datos", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+
+       }
+
+
 
     @Override
     public void displayCategories(ArrayList<Category> categories) {
@@ -103,9 +162,10 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
 
     @Override
     public void displayProducts(List<Search> productSummaries) {
-        adapter = new ProductSummaryAdapter(productSummaries,getContext());
-        recyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        items.addAll(productSummaries);
+        //adapter = new ProductSummaryAdapter(productSummaries,getContext());
+        //recyclerView.setAdapter(adapter);
+        //adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -113,15 +173,17 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
         System.out.println("ERROR"+error);
     }
 
-    @Override
+
+
+        @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.searchmenu, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setOnQueryTextListener(this);
         searchView.setQueryHint("Search");
-
         super.onCreateOptionsMenu(menu, inflater);
+
 
     }
 
@@ -132,8 +194,21 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
 
     @Override
     public boolean onMenuItemActionExpand(MenuItem item) {
-        return true;
+              return true;
     }
+
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            switch (item.getItemId()) {
+                // Respond to the action bar's Up/Home button
+                case R.id.filtres:
+                    intent = new Intent(getActivity(), FiltersActivity.class);
+                    startActivity(intent);
+                    return true;
+            }
+            return super.onOptionsItemSelected(item);
+        }
 
     @Override
     public boolean onMenuItemActionCollapse(MenuItem item) {
@@ -142,13 +217,16 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
 
     @Override
     public boolean onQueryTextSubmit(String query) {
+        setQuery(query);
+        items.clear();
         this.presenter.getProducts(query,0,10);
         return true;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
-
+        setQuery(newText);
+        items.clear();
         this.presenter.getProducts(newText,0,10);
         return true;
     }
