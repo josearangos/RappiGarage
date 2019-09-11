@@ -28,7 +28,7 @@
                 android:id="@+id/imageProduct"
                 android:layout_width="match_parent"
                 android:layout_height="266dp"
-                app:placeholderImage="@drawable/places_powered_by_google_light" />
+                fresco:placeholderImage="@drawable/ic_cloud" />
 
             <TextView
                 android:id="@+id/productName"
@@ -111,27 +111,8 @@
                         android:text="@string/userName"
                         android:textColor="@color/gray500"
                         android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/userLocation"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="10dp"
-                        android:paddingHorizontal="10dp"
-                        android:text="@string/location"
-                        android:textColor="@color/gray900"
-                        android:textSize="10sp"
-                        android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"></LinearLayout>
-
             <Button
                 android:id="@+id/button"
                 android:layout_width="216dp"
