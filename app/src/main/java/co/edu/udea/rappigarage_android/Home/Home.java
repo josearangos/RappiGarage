@@ -21,34 +21,57 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import co.edu.udea.rappigarage_android.GlobalServices.APIClient;
 import co.edu.udea.rappigarage_android.GlobalServices.Category.Category;
+import co.edu.udea.rappigarage_android.Home.API.IProduct;
 import co.edu.udea.rappigarage_android.Home.API.ProductSummary;
 import co.edu.udea.rappigarage_android.Home.API.Search;
 import co.edu.udea.rappigarage_android.Home.Adapters.ProductSummaryAdapter;
 import co.edu.udea.rappigarage_android.Home.Adapters.ProductSummaryAdapterPro;
 import co.edu.udea.rappigarage_android.Home.Filters.FiltersActivity;
+import co.edu.udea.rappigarage_android.Home.Utils.PaginationAdapter;
+import co.edu.udea.rappigarage_android.Home.Utils.PaginationScrollListener;
 import co.edu.udea.rappigarage_android.Product.Publish.ProductFormActivity;
 import co.edu.udea.rappigarage_android.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-    public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener {
+public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener {
 
 
-
-    int firstVisibleItem, visibleItemCount, totalItemCount;
-    Intent intent;
+    //List products
+    PaginationAdapter adapter;
+    GridLayoutManager layoutManager;
+    private RecyclerView recyclerView;
     private ProgressBar progressBar;
+
+    //API
+    private IProduct apiInterface;
+
+    //
+    private static final int PAGE_START = 0;
+    private boolean isLoading = false;
+    private boolean isLastPage = false;
+    // limiting to 5 for this tutorial, since total pages in actual API is very large. Feel free to modify.
+    private int TOTAL_PAGES = 3;
+    private int currentPage = PAGE_START;
+
+    //private RecyclerView.LayoutManager layoutManager;
+
+
+    Intent intent;
     HashMap<String,Integer> categoriesList ;
     private ChipGroup tagGroup_categories;
-    private RecyclerView recyclerView;
-    private RecyclerView.LayoutManager layoutManager;
+
     //private ProductSummaryAdapter adapter;
     private String query = "";
 
     private  List<Search> items = new ArrayList<>();
-    ProductSummaryAdapterPro adapterPro ;
 
 
 
@@ -84,7 +107,6 @@ import co.edu.udea.rappigarage_android.R;
         initializeViews(view);
 
         this.presenter.getCategories();
-        this.presenter.getProducts(getQuery(),0,10);
 
 
 
@@ -106,44 +128,105 @@ import co.edu.udea.rappigarage_android.R;
         progressBar = (ProgressBar)view.findViewById(R.id.progressBar);
         recyclerView =view.findViewById(R.id.productList);
 
-        items.clear();
+        //API
+        apiInterface = APIClient.getApiClient().create(IProduct.class);
+
+        adapter = new PaginationAdapter(getContext());
         layoutManager = new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        adapterPro = new ProductSummaryAdapterPro(recyclerView,getActivity(),items);
-        recyclerView.setAdapter(adapterPro);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(adapter);
 
-        adapterPro.setLoadMore(new ILoadMore() {
+        recyclerView.addOnScrollListener(new PaginationScrollListener(layoutManager) {
             @Override
-            public void onLoadMode() {
-                if(items.size()<= items.size()){//Maximo de items
-                    items.add(null);
-                    adapterPro.notifyItemInserted(items.size()-1);
+            protected void loadMoreItems() {
+                isLoading = true;
+                currentPage += 1;
 
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            items.remove(items.size()-1);
-                            adapterPro.notifyItemRemoved(items.size());
-                            int index = items.size();
-                            int end = index +2;
-
-                            //LLENA LISTA DE ITEMS CON EL METODO ADD O ADDALL
-                            presenter.getProducts(getQuery(),index,end);
-                        }
-                    },5000); //tiempo de carga
+                // mocking network delay for API call
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadNextPage();
 
 
-                }else{
-                    Toast.makeText(getContext(),"NO hay mas datos", Toast.LENGTH_SHORT).show();
+                    }
+                }, 1000);
+            }
+
+            @Override
+            public int getTotalPageCount() {
+                return TOTAL_PAGES;
+            }
+
+            @Override
+            public boolean isLastPage() {
+                return isLastPage;
+            }
+
+            @Override
+            public boolean isLoading() {
+                return isLoading;
+            }
+        });
+        loadFirstPage();
+
+       }
+        private void loadFirstPage() {
+            Call<ProductSummary> call = apiInterface.getProductsforQuery(query,0,1);
+            call.enqueue(new Callback<ProductSummary>() {
+                @Override
+                public void onResponse(Call<ProductSummary> call, Response<ProductSummary> response) {
+
+
+                    if(response.isSuccessful()){
+
+                        List<Search> items = response.body().getSearch();
+                        progressBar.setVisibility(View.GONE);
+                        adapter.addAll(items);
+
+
+                        if (currentPage != TOTAL_PAGES) adapter.addLoadingFooter();
+                        else isLastPage = true;
+                    }
                 }
+
+                @Override
+                public void onFailure(Call<ProductSummary> call, Throwable t) {
+                    t.printStackTrace();
+                    progressBar.setVisibility(View.GONE);
+                }
+            });
+        }
+
+    private void loadNextPage() {
+        Call<ProductSummary> call = apiInterface.getProductsforQuery(query,0,1);
+        call.enqueue(new Callback<ProductSummary>() {
+            @Override
+            public void onResponse(Call<ProductSummary> call, Response<ProductSummary> response) {
+
+                adapter.removeLoadingFooter();
+                isLoading = false;
+
+                if(response.isSuccessful()){
+                    List<Search> items = response.body().getSearch();
+                    adapter.addAll(items);
+
+                    if (currentPage != TOTAL_PAGES) adapter.addLoadingFooter();
+                    else isLastPage = true;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductSummary> call, Throwable t) {
+                t.printStackTrace();
+                progressBar.setVisibility(View.GONE);
             }
         });
 
 
-
-       }
-
+    }
 
 
     @Override
@@ -162,7 +245,7 @@ import co.edu.udea.rappigarage_android.R;
 
     @Override
     public void displayProducts(List<Search> productSummaries) {
-        items.addAll(productSummaries);
+        //items.addAll(productSummaries);
         //adapter = new ProductSummaryAdapter(productSummaries,getContext());
         //recyclerView.setAdapter(adapter);
         //adapter.notifyDataSetChanged();
@@ -219,7 +302,7 @@ import co.edu.udea.rappigarage_android.R;
     public boolean onQueryTextSubmit(String query) {
         setQuery(query);
         items.clear();
-        this.presenter.getProducts(query,0,10);
+        this.presenter.getProducts(query,0,30);
         return true;
     }
 
