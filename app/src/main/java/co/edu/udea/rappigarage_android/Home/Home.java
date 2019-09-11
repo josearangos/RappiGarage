@@ -58,10 +58,9 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
     private boolean isLoading = false;
     private boolean isLastPage = false;
     // limiting to 5 for this tutorial, since total pages in actual API is very large. Feel free to modify.
-    private int TOTAL_PAGES = 3;
+    private int TOTAL_PAGES = 2000;
     private int currentPage = PAGE_START;
-
-    //private RecyclerView.LayoutManager layoutManager;
+    private int LastPosition = 0;
 
 
     Intent intent;
@@ -104,8 +103,8 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
         categoriesList = new HashMap<String,Integer>();
         this.presenter = new HomePresenter(this);
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        initializeViews(view);
 
+        initializeViews(view);
         this.presenter.getCategories();
 
 
@@ -124,6 +123,8 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
 
     @Override
     public void initializeViews(View view ) {
+        LastPosition = 0;
+
         this.tagGroup_categories = view.findViewById(R.id.tagGroup_categories);
         progressBar = (ProgressBar)view.findViewById(R.id.progressBar);
         recyclerView =view.findViewById(R.id.productList);
@@ -173,20 +174,23 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
         loadFirstPage();
 
        }
-        private void loadFirstPage() {
-            Call<ProductSummary> call = apiInterface.getProductsforQuery(query,0,1);
+
+    private void loadFirstPage() {
+        items.clear();
+           LastPosition = LastPosition + 5 ;
+            Call<ProductSummary> call = apiInterface.getProductsforQuery(getQuery(),0,5);
             call.enqueue(new Callback<ProductSummary>() {
                 @Override
                 public void onResponse(Call<ProductSummary> call, Response<ProductSummary> response) {
 
 
                     if(response.isSuccessful()){
-
-                        List<Search> items = response.body().getSearch();
+                        items = response.body().getSearch();
                         progressBar.setVisibility(View.GONE);
                         adapter.addAll(items);
-
-
+                        if(items.size()<5){
+                            TOTAL_PAGES =currentPage;
+                        }
                         if (currentPage != TOTAL_PAGES) adapter.addLoadingFooter();
                         else isLastPage = true;
                     }
@@ -201,7 +205,7 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
         }
 
     private void loadNextPage() {
-        Call<ProductSummary> call = apiInterface.getProductsforQuery(query,0,1);
+        Call<ProductSummary> call = apiInterface.getProductsforQuery(getQuery(),LastPosition,5);
         call.enqueue(new Callback<ProductSummary>() {
             @Override
             public void onResponse(Call<ProductSummary> call, Response<ProductSummary> response) {
@@ -210,9 +214,12 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
                 isLoading = false;
 
                 if(response.isSuccessful()){
-                    List<Search> items = response.body().getSearch();
+                    items = response.body().getSearch();
                     adapter.addAll(items);
-
+                    LastPosition = LastPosition +5;
+                    if(items.size()<5){
+                        TOTAL_PAGES =currentPage;
+                    }
                     if (currentPage != TOTAL_PAGES) adapter.addLoadingFooter();
                     else isLastPage = true;
                 }
@@ -255,7 +262,6 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
     public void displayError(String error) {
         System.out.println("ERROR"+error);
     }
-
 
 
         @Override
@@ -301,16 +307,17 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
     @Override
     public boolean onQueryTextSubmit(String query) {
         setQuery(query);
-        items.clear();
-        this.presenter.getProducts(query,0,30);
+        //this.presenter.getProducts(getQuery(),0,10);
+        LastPosition = 0;
+        currentPage = 0;
+        loadNextPage();
         return true;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
         setQuery(newText);
-        items.clear();
-        this.presenter.getProducts(newText,0,10);
+        loadNextPage();
         return true;
     }
 }
