@@ -51,12 +51,23 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/phone_number"
+                android:id="@+id/phoneNumberInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Escribe tu número"
                 android:inputType="number"
                 android:theme="@style/RGTextInput" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/green500"
+            android:text="Recibir código de verificación"
+            android:onClick="handleLogin"
+            android:textAllCaps="false" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
