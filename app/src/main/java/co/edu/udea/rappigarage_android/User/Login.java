@@ -57,13 +57,14 @@ public class Login extends AppCompatActivity {
                     // Go to Main Activity
                     Intent intent = new Intent(Login.this, MainActivity.class);
                     startActivity(intent);
+                } else {
+                    btnLogin.setText(btnLoginText);
+                    Toast.makeText(getApplicationContext(), "Ooops, Algo ha ido mal! Inténtalo más tarde.", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Token> call, Throwable t) {
-                System.out.println("Failure Request!");
-                btnLogin.setText(btnLoginText);
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
