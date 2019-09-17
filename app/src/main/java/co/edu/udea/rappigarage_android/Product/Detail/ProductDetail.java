@@ -2,8 +2,9 @@ package co.edu.udea.rappigarage_android.Product.Detail;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.google.android.material.textfield.TextInputEditText;
 
 import android.os.Bundle;
 import android.view.View;
@@ -27,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ProductDetail extends AppCompatActivity {
 
     //Views for product
-    private SimpleDraweeView imageProduct;
+    private SliderLayout imageProduct;
     private ElegantNumberButton selectedQuantity;
     private ProgressBar progressDetail;
     private TextView productName;
@@ -57,7 +58,7 @@ public class ProductDetail extends AppCompatActivity {
         setContentView(R.layout.activity_product_detail);
         this.progressDetail = findViewById(R.id.progressDetail);
         this.productName = findViewById(R.id.productName);
-        this.imageProduct = findViewById(R.id.imageProduct);
+        this.imageProduct = (SliderLayout)findViewById(R.id.imageProduct);
         this.price =  findViewById(R.id.price);
         this.quantity =  findViewById(R.id.quantity);
         this.productDescription =  findViewById(R.id.productDescription);
@@ -97,15 +98,28 @@ public class ProductDetail extends AppCompatActivity {
 
     public  void showProduct(Product product){
         this.productName.setText(product.getName());
+
         this.photoSource = product.getPhotos();
-        this.imageProduct.setImageURI(photoSource.get(0).getSource());
+
         this.price.setText(Double.toString(product.getPrice()));
         this.quantity.setText(product.getAvailableQuantity().toString());
         this.productDescription.setText(product.getDescription());
         this.productLocation.setText(product.getCityName());
         this.publishedAt.setText(product.getPublishDate());
         this.warranty.setText(product.getWarranty());
+
         getUserInfo(product.getUserId());
+
+        setImagestoSlidwer();
+    }
+
+    private void setImagestoSlidwer() {
+        TextSliderView textSliderView;
+        for( PhotoSource pt : this.photoSource){
+            textSliderView = new TextSliderView(this);
+            textSliderView.image(pt.getSource());
+            this.imageProduct.addSlider(textSliderView);
+        }
     }
 
     private void getUserInfo(Integer userId) {
@@ -131,5 +145,11 @@ public class ProductDetail extends AppCompatActivity {
     public void showUser(RappiUser usr){
         this.nameUser.setText(usr.getName());
         this.sellerPhoto.setImageURI(usr.getPhotoUrl());
+    }
+
+    @Override
+    protected void onStop() {
+        this.imageProduct.stopAutoCycle();
+        super.onStop();
     }
 }

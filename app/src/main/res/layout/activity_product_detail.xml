@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -24,11 +25,12 @@
             android:orientation="vertical"
             >
 
-            <com.facebook.drawee.view.SimpleDraweeView
+            <com.daimajia.slider.library.SliderLayout
                 android:id="@+id/imageProduct"
                 android:layout_width="match_parent"
-                android:layout_height="266dp"
-                fresco:placeholderImage="@drawable/ic_cloud" />
+                android:layout_height="350dp"
+                android:gravity="center"
+                />
 
             <TextView
                 android:id="@+id/productName"
@@ -119,11 +121,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/buyButton" />
 
-            <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
-                android:id="@+id/selectedQuantity"
-                android:layout_width="76dp"
-                android:layout_height="27dp"
-                app:initialNumber="1" />
         </LinearLayout>
     </FrameLayout>
 
