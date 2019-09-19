@@ -30,7 +30,7 @@ public class ProductFormModel implements IProductForm.IInteractor, ICategoryImpl
     private IProductForm.IPresenter presenter;
     private ArrayList<String> photosNames = new ArrayList<>();
     private static String BASE_URL ="https://apideveloprappigarage.herokuapp.com/api/ImageContainers/product-photo-container/download/";
-
+    List<PhotoSource> photoSources;
 
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("https://apideveloprappigarage.herokuapp.com/api/")
@@ -56,6 +56,17 @@ public class ProductFormModel implements IProductForm.IInteractor, ICategoryImpl
     public void publishProduct(Product product, ArrayList<String> uriImages) {
 
 
+        //List<PhotoSource>
+        for (int j=0;j<uriImages.size();j++){
+            int finalPosition =  uriImages.get(j).split("/").length;
+            String nameFile =  uriImages.get(j).split("/")[finalPosition];
+            PhotoSource photoSource = new PhotoSource(BASE_URL+nameFile);
+            //System.out.println('fotoooo',);
+            photoSources.add(photoSource);
+        }
+
+
+
         List<MultipartBody.Part> photosParts = new ArrayList<>();
 
         for (int i = 0; i<uriImages.size();i++) {
@@ -63,13 +74,18 @@ public class ProductFormModel implements IProductForm.IInteractor, ICategoryImpl
         }
 
 
-
         Call<Result> call = iProductFormService.uploadPhoto(photosParts);
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
                 if(response.isSuccessful()){
-                    System.out.println("RESPONSE" + response.body().getFiles());
+                        //Construir resource
+
+
+
+
+
+
 
                 }else{
 
