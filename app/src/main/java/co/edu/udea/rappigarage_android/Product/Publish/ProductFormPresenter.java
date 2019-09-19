@@ -1,6 +1,7 @@
 package co.edu.udea.rappigarage_android.Product.Publish;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import co.edu.udea.rappigarage_android.GlobalServices.Category.Category;
 import co.edu.udea.rappigarage_android.GlobalServices.Category.ICategoryImplement;
@@ -34,9 +35,9 @@ public class ProductFormPresenter implements IProductForm.IPresenter ,IProductFo
     }
 
     @Override
-    public void publishProduct(Product product, ArrayList<String> urisPhotos) {
+    public void publishProduct(Product product, ArrayList<String> urisPhotos, List<Integer> categories) {
         view.displayLoader(true);
-        interactor.publishProduct(product,urisPhotos);
+        interactor.publishProduct(product,urisPhotos,categories);
     }
 
 

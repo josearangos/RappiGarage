@@ -37,6 +37,7 @@
                         android:layout_width="match_parent"
                         android:orientation="horizontal"
                         android:layout_height="wrap_content">
+
                         <com.jackandphantom.circularimageview.RoundedImage
                             android:layout_marginRight="10dp"
                             android:layout_width="80dp"

@@ -77,7 +77,7 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
     private RecyclerView listImages ;
     ArrayList<String> urisPhotos = new ArrayList<>(); // Uris images
     ImagesAdapter imagesAdapter ;
-
+    List<Integer> categories = new ArrayList<>();
     String morcilla ="AIzaSyBS7E706CIUuXJmAefzTa7kXXEyPWzRJ6o";
     PlacesClient placesClient;
     Double latitude,longitude =0.0;
@@ -229,7 +229,7 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
                     Chip chip =(Chip)tagGroup_categories.getChildAt(i);
                     if(chip.isChecked()){
                         tagsCheckedId.add(getIdCategory(String.valueOf(chip.getText())));
-
+                        categories.add(getIdCategory(String.valueOf(chip.getText())));
                     }
 
                 }
@@ -249,7 +249,6 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
 
     @Override
     public void getCategories(ArrayList<Category> categories) {
-
         //ShowCategories
         LayoutInflater  inflaterCategories = LayoutInflater.from(ProductFormActivity.this);
         for(Category category : categories){
@@ -288,7 +287,7 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
     @Override
     public void publishProduct() {
 
-        //if(validationForm() != false) {
+        if(validationForm() != false) {
 
             Location location = new Location(getLatitude(), getLongitude());
             measures = new Measures(
@@ -296,6 +295,7 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
                     Integer.valueOf((int) this.pickerHeigth.getLeftSeekBar().getProgress()),
                     Integer.valueOf((int) this.pickerWeigth.getLeftSeekBar().getProgress()),
                     Integer.valueOf((int) this.pickerLarge.getLeftSeekBar().getProgress()));
+
             Product product = new Product(
                     Double.valueOf(this.price.getText().toString()),
                     this.name.getText().toString(),
@@ -313,12 +313,12 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
                     null);
 
             Toast.makeText(getApplicationContext(),this.getCityName(),Toast.LENGTH_SHORT).show();
-            this.presenter.publishProduct(product,getUrisPhotos());
-       // }else{
-        ///   Toast.makeText(getApplicationContext(),"complete el formulario",Toast.LENGTH_LONG).show();
+            this.presenter.publishProduct(product,getUrisPhotos(),this.categories);
+        }else {
+            Toast.makeText(getApplicationContext(), "complete el formulario", Toast.LENGTH_LONG).show();
 
-        //}
-    }
+            }
+        }
 
     public String getCurrentUTC(){
 
