@@ -112,7 +112,7 @@ public class ProductDetailActivity extends AppCompatActivity implements IProduct
         this.categories = new ArrayList<>();
         Category catDum = new Category();
         catDum.setId(1);
-        catDum.setName("Bareticapa");
+        catDum.setName("Categoria1");
         this.categories.add(catDum);
         getUserInfo(product.getUserId());
         setImagestoSlidwer();
