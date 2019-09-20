@@ -7,6 +7,7 @@ import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.jackandphantom.circularimageview.RoundedImage;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -51,6 +52,7 @@ public class ProductDetailActivity extends AppCompatActivity implements IProduct
     //User
     private TextView nameUser;
     private SimpleDraweeView sellerPhoto;
+    private RoundedImage seller;
 
     //Arrays
     private List<PhotoSource> photoSource;
