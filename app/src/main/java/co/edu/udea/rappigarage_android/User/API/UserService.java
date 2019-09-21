@@ -5,6 +5,6 @@ import retrofit2.http.POST;
 import retrofit2.Call;
 
 public interface UserService {
-    @POST("/auth")
+    @POST("auth")
     Call<Token> getVerificationCode(@Body PhoneNumber phoneNumber);
 }

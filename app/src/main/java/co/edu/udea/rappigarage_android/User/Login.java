@@ -24,7 +24,7 @@ import retrofit2.Call;
 public class Login extends AppCompatActivity {
 
     Retrofit retrofit = new Retrofit.Builder()
-        .baseUrl("http://microservices.dev.rappi.com/api/ms/u-rappi/")
+        .baseUrl("https://us-central1-rappi-garage.cloudfunctions.net/widgets/")
         .addConverterFactory(GsonConverterFactory.create())
         .build();
 
@@ -46,8 +46,10 @@ public class Login extends AppCompatActivity {
         call.enqueue(new Callback<Token>() {
             @Override
             public void onResponse(Call<Token> call, Response<Token> response) {
-                if(response.isSuccessful()) {
+                System.out.println("Response is" + response.code());
+                if(response.code() == 200) {
                     // Save token in shared preferences
+                    System.out.println("Response is" + response.body());
                     Token token = response.body();
                     SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();

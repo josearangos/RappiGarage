@@ -12,7 +12,7 @@ public class PhoneNumber {
     public PhoneNumber() {
     }
 
-    @SerializedName("phoneNumber")
+    @SerializedName("phone")
     @Expose
     private String phoneNumber;
 
