@@ -80,7 +80,7 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 }
                 searcVH.title.setText(search.getName());
                 searcVH.price.setText("$"+String.valueOf(search.getPrice()));
-                System.out.println("ID:"+String.valueOf(search.getId()));
+                //System.out.println("ID:"+String.valueOf(search.getId()));
                 break;
 
             case LOADING:

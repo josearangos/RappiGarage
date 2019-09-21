@@ -73,7 +73,6 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
     private  List<Search> items = new ArrayList<>();
 
 
-
         public String getQuery() {
             return query;
         }
@@ -103,12 +102,8 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
         categoriesList = new HashMap<String,Integer>();
         this.presenter = new HomePresenter(this);
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
         initializeViews(view);
         this.presenter.getCategories();
-
-
-
         return view;
     }
 
@@ -183,10 +178,10 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
                 @Override
                 public void onResponse(Call<ProductSummary> call, Response<ProductSummary> response) {
 
-
                     if(response.isSuccessful()){
                         items = response.body().getSearch();
                         progressBar.setVisibility(View.GONE);
+                        adapter.clear();
                         adapter.addAll(items);
                         if(items.size()<5){
                             TOTAL_PAGES =currentPage;
@@ -205,6 +200,7 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
         }
 
     private void loadNextPage() {
+
         Call<ProductSummary> call = apiInterface.getProductsforQuery(getQuery(),LastPosition,5);
         call.enqueue(new Callback<ProductSummary>() {
             @Override
@@ -252,10 +248,10 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
 
     @Override
     public void displayProducts(List<Search> productSummaries) {
-        //items.addAll(productSummaries);
+        items.addAll(productSummaries);
         //adapter = new ProductSummaryAdapter(productSummaries,getContext());
-        //recyclerView.setAdapter(adapter);
-        //adapter.notifyDataSetChanged();
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -307,17 +303,29 @@ public class Home extends Fragment  implements  IHome.IView, SearchView.OnQueryT
     @Override
     public boolean onQueryTextSubmit(String query) {
         setQuery(query);
-        //this.presenter.getProducts(getQuery(),0,10);
+        LastPosition= 0;
+        loadFirstPage();
+        /*
+        *
         LastPosition = 0;
         currentPage = 0;
         loadNextPage();
+        *
+        *
+        * */
         return true;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        setQuery(newText);
+
+
+      /*
+      *   setQuery(newText);
         loadNextPage();
+      *
+      *
+      * */
         return true;
     }
 }
