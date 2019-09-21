@@ -1,11 +1,13 @@
 package co.edu.udea.rappigarage_android.Home.Utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -15,6 +17,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import co.edu.udea.rappigarage_android.Home.API.Search;
+import co.edu.udea.rappigarage_android.Product.Detail.ProductDetailActivity;
 import co.edu.udea.rappigarage_android.R;
 
 public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -68,7 +71,7 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        Search search = items.get(position); // Movie
+        Search search = items.get(position);
 
         switch (getItemViewType(position)) {
             case ITEM:
@@ -80,7 +83,17 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 }
                 searcVH.title.setText(search.getName());
                 searcVH.price.setText("$"+String.valueOf(search.getPrice()));
-                //System.out.println("ID:"+String.valueOf(search.getId()));
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                    int id = items.get(position).getId();
+                    Intent intent = new Intent(context, ProductDetailActivity.class);
+                    intent.putExtra("ProductId",id);
+                    context.startActivity(intent);
+
+
+                    }
+                });
                 break;
 
             case LOADING:

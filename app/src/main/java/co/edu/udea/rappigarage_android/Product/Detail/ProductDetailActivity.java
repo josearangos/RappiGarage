@@ -47,6 +47,16 @@ public class ProductDetailActivity extends AppCompatActivity implements IProduct
     private TextView publishedAt;
     private TextView warranty;
     private ChipGroup group_categories;
+    private int productId;
+
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
 
     //User
     private TextView nameUser;
@@ -67,8 +77,11 @@ public class ProductDetailActivity extends AppCompatActivity implements IProduct
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
+        Bundle extras =getIntent().getExtras();
+        setProductId(extras.getInt("ProductId"));
         this.categorieList = new HashMap<String,Integer>();
         this.initializeViews();
+
         //
     }
 
@@ -182,7 +195,7 @@ public class ProductDetailActivity extends AppCompatActivity implements IProduct
         this.sellerPhoto = findViewById(R.id.userImage);
         this.group_categories = findViewById(R.id.group_categories);
 
-        getProductDetail("65");// Here recieves the parameter from the main view
+        getProductDetail(String.valueOf(getProductId()));// Here recieves the parameter from the main view
 
         //Agregar evento onClick para compra del producto.
     }

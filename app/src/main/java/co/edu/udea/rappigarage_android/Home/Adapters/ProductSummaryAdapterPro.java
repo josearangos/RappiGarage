@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -123,6 +124,12 @@ public class ProductSummaryAdapterPro extends RecyclerView.Adapter<RecyclerView.
             }
             viewHolder.title.setText(items.get(position).getName());
             viewHolder.price.setText("$"+String.valueOf(items.get(position).getPrice()));
+
+            viewHolder.itemView.setOnClickListener(v -> {
+                System.out.println("CLICCCCCCCCCCCCCCC");
+                    Toast.makeText(activity.getApplicationContext(),"Clic in"+String.valueOf(items.get(position).getId()),Toast.LENGTH_SHORT).show();
+
+            });
         }
         else if(holder instanceof LoadingViewHolder){
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder)holder;
