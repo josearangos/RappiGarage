@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import co.edu.udea.rappigarage_android.GlobalServices.Category.Category;
+import co.edu.udea.rappigarage_android.Product.Detail.API.CategoriesProductResponse;
 import co.edu.udea.rappigarage_android.Product.Detail.API.IProductDetailService;
 import co.edu.udea.rappigarage_android.Product.Detail.API.IProductSellerService;
 import co.edu.udea.rappigarage_android.Product.Publish.API.PhotoSource;
@@ -204,16 +205,37 @@ public class ProductDetailActivity extends AppCompatActivity implements IProduct
     @Override
     public void getCategories() {
 
+
+        IProductDetailService detailService = retrofit.create(IProductDetailService.class);
+        Call<ArrayList<CategoriesProductResponse>> call = detailService.getCategories("Products/"+ getProductId() + "/categories");
+
+
+        call.enqueue(new Callback<ArrayList<CategoriesProductResponse>>() {
+            @Override
+            public void onResponse(Call<ArrayList<CategoriesProductResponse>> call, Response<ArrayList<CategoriesProductResponse>> response) {
+
+                ArrayList<CategoriesProductResponse> Pcategories = response.body();
+
+
+                LayoutInflater inflaterCategories = LayoutInflater.from(ProductDetailActivity.this);
+                for(CategoriesProductResponse category : Pcategories){
+                    Chip chip = (Chip)inflaterCategories.inflate(R.layout.chip_item,null,false);
+                    chip.setText(category.getName());
+                    categorieList.put(category.getName(),category.getId());
+
+                    group_categories.addView(chip);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<CategoriesProductResponse>> call, Throwable t) {
+
+            }
+        });
+
         //ShowCategories
-        LayoutInflater inflaterCategories = LayoutInflater.from(ProductDetailActivity.this);
-        for(Category category : this.categories){
-            Chip chip = (Chip)inflaterCategories.inflate(R.layout.chip_item,null,false);
-            chip.setText(category.getName());
-            this.categorieList.put(category.getName(),category.getId());
 
-            this.group_categories.addView(chip);
-
-        }
     }
     @Override
     public void displayError(String error) {
@@ -225,5 +247,8 @@ public class ProductDetailActivity extends AppCompatActivity implements IProduct
     public void displaySuccesFull(String ms) {
         Toast.makeText(getApplicationContext(),ms,Toast.LENGTH_LONG).show();
     }
+
+
+
 
 }
