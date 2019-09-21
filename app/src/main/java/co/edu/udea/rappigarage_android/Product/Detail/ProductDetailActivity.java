@@ -7,6 +7,7 @@ import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.jackandphantom.circularimageview.RoundedImage;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -115,17 +116,17 @@ public class ProductDetailActivity extends AppCompatActivity implements IProduct
         this.photoSource = product.getPhotos();
 
         this.price.setText(Double.toString(product.getPrice()));
-        this.quantity.setText(product.getAvailableQuantity().toString());
+        this.quantity.setText(product.getAvailableQuantity().toString() + " unidades disponibles");
         this.productDescription.setText(product.getDescription());
         this.productLocation.setText(product.getCityName());
         this.publishedAt.setText(product.getPublishDate());
-        this.warranty.setText(product.getWarranty());
+        this.warranty.setText(product.getWarranty() + " meses de garantía");
 
         //Categorías dumis mientras albert me las trae
         this.categories = new ArrayList<>();
         Category catDum = new Category();
         catDum.setId(1);
-        catDum.setName("Bareticapa");
+        catDum.setName("Categoria1");
         this.categories.add(catDum);
         getUserInfo(product.getUserId());
         setImagestoSlidwer();
