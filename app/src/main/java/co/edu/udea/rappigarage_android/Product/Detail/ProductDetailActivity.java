@@ -52,7 +52,6 @@ public class ProductDetailActivity extends AppCompatActivity implements IProduct
     //User
     private TextView nameUser;
     private SimpleDraweeView sellerPhoto;
-    private RoundedImage seller;
 
     //Arrays
     private List<PhotoSource> photoSource;
@@ -104,11 +103,11 @@ public class ProductDetailActivity extends AppCompatActivity implements IProduct
         this.photoSource = product.getPhotos();
 
         this.price.setText(Double.toString(product.getPrice()));
-        this.quantity.setText(product.getAvailableQuantity().toString());
+        this.quantity.setText(product.getAvailableQuantity().toString() + " unidades disponibles");
         this.productDescription.setText(product.getDescription());
         this.productLocation.setText(product.getCityName());
         this.publishedAt.setText(product.getPublishDate());
-        this.warranty.setText(product.getWarranty());
+        this.warranty.setText(product.getWarranty() + " meses de garantía");
 
         //Categorías dumis mientras albert me las trae
         this.categories = new ArrayList<>();

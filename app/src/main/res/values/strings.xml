@@ -14,7 +14,7 @@
     <string name="locationLabel">Ubicación: </string>
     <string name="availableQuantity">Cantidad*</string>
     <string name="warranty">Garantía*</string>
-    <string name="warrantyLabel">Garantía: </string>
+    <string name="warrantyLabel">de garantía </string>
     <string name="condition">Condición*</string>
     <string name="Pnew">Nuevo</string>
     <string name="Pused">Usado</string>
@@ -37,7 +37,7 @@
     <string name="filtres">Filtros</string>
     <string name="productName">Nombre de Producto</string>
     <string name="productDetail">Detalle del producto</string>
-    <string name="quiantity">Cantidad: </string>
+    <string name="quiantity">Unidades disponibles </string>
     <string name="productDescription">Product Description</string>
     <string name="productDescriptionLabel">Descripción</string>
     <string name="userName">User Name</string>
