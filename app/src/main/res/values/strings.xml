@@ -31,4 +31,11 @@
     <string name="moda">Moda</string>
     <string name="search">Buscar</string>
     <string name="filtres">Filtros</string>
+    <string name="productName">Nombre de Producto</string>
+    <string name="productDetail">Detalle del producto</string>
+    <string name="quiantity">Cantidad</string>
+    <string name="productDescription">Product Description</string>
+    <string name="userName">User Name</string>
+    <string name="buyButton">Comprar</string>
+
 </resources>

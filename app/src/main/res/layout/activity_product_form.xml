@@ -159,11 +159,11 @@
                         />
 
                     <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
-                        app:initialNumber="1"
-                        android:layout_width="match_parent"
                         android:id="@+id/availableQuantity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_height="wrap_content"/>
+                        app:initialNumber="1" />
 
                     <TextView
                         android:layout_marginBottom="10dp"
