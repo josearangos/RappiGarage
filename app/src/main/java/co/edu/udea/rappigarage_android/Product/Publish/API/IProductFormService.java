@@ -22,5 +22,7 @@ public interface IProductFormService  {
     @POST("ImageContainers/product-photo-container/upload")
     Call<Result> uploadPhoto (@Part List<MultipartBody.Part> photos );
 
+    @POST("ProductXCategories/addCategories/")
+    Call<AddCategoriesResponse> addCategories(@Body AddCategoriesBody addCategoriesBody);
 
 }

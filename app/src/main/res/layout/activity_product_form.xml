@@ -17,8 +17,10 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             >
+
             <include android:id="@+id/toolbar"
                 layout="@layout/tool_bar"/>
+
             <LinearLayout
                 android:weightSum="1"
                 android:orientation="vertical"
@@ -37,6 +39,7 @@
                         android:layout_width="match_parent"
                         android:orientation="horizontal"
                         android:layout_height="wrap_content">
+
                         <com.jackandphantom.circularimageview.RoundedImage
                             android:layout_marginRight="10dp"
                             android:layout_width="80dp"
@@ -156,11 +159,11 @@
                         />
 
                     <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
-                        app:initialNumber="1"
-                        android:layout_width="match_parent"
                         android:id="@+id/availableQuantity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_height="wrap_content"/>
+                        app:initialNumber="1" />
 
                     <TextView
                         android:layout_marginBottom="10dp"
@@ -384,8 +387,10 @@
                         android:id="@+id/publishBtn"
                         android:layout_height="wrap_content"
                         android:text="@string/publish"
+                        android:onClick="publishProductClick"
                         style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                        android:layout_width="match_parent" />
+                        android:layout_width="match_parent"
+                        tools:ignore="OnClick" />
 
                 </LinearLayout>
 

@@ -17,7 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".User.Login">
+        <activity android:name=".Home.Filters.FiltersActivity"/>
+        <activity android:name=".User.CodeConfirmation" />
+        <activity android:name=".User.Login" />
+        <activity android:name=".SplashIntro">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,6 +28,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".SplashIntro">
+        </activity>
+        <activity android:name=".Product.Detail.ProductDetailActivity">
         </activity>
         <activity android:name=".Product.Publish.ProductFormActivity" />
         <activity android:name=".MainActivity" />

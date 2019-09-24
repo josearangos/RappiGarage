@@ -3,6 +3,7 @@ package co.edu.udea.rappigarage_android.Product.Publish;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import co.edu.udea.rappigarage_android.GlobalServices.Category.Category;
 import co.edu.udea.rappigarage_android.Product.Publish.API.PhotoModels.Result;
@@ -25,14 +26,14 @@ public interface IProductForm {
     interface IPresenter {
         void onDestroy();
         void getCategories();
-        void publishProduct(Product product,ArrayList<String> urisPhotos);
+        void publishProduct(Product product, ArrayList<String> urisPhotos, List<Integer> categories);
         void onSuccessPublish(ProductResponse productResponse);
         void onErrorPublish(String error);
     }
 
     interface IInteractor{
         void getCategories();
-        void publishProduct(Product product,ArrayList<String> urisPhotos);
+        void publishProduct(Product product,ArrayList<String> urisPhotos,List<Integer> categories);
 
     }
 

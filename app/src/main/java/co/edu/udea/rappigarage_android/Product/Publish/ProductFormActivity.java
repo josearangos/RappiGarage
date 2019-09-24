@@ -58,6 +58,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import co.edu.udea.rappigarage_android.GlobalServices.Category.Category;
+import co.edu.udea.rappigarage_android.MainActivity;
 import co.edu.udea.rappigarage_android.Product.Adapters.ImagesAdapter;
 import co.edu.udea.rappigarage_android.Product.Publish.API.Location;
 import co.edu.udea.rappigarage_android.Product.Publish.API.Measures;
@@ -77,7 +78,7 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
     private RecyclerView listImages ;
     ArrayList<String> urisPhotos = new ArrayList<>(); // Uris images
     ImagesAdapter imagesAdapter ;
-
+    List<Integer> categories = new ArrayList<>();
     String morcilla ="AIzaSyBS7E706CIUuXJmAefzTa7kXXEyPWzRJ6o";
     PlacesClient placesClient;
     Double latitude,longitude =0.0;
@@ -160,9 +161,6 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
         this.presenter = new ProductFormPresenter(this);
         this.presenter.getCategories();
         settingGooglePlaces();
-        requestPermission();
-
-
     }
 
 
@@ -220,36 +218,14 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
         //Categories group
         this.tagGroup_categories = findViewById(R.id.tagGroup_categories);
         this.publishBtn = findViewById(R.id.publishBtn);
-        this.publishBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //tagsCheckedId contiene los id de las etiquetas que selecciono
-                ArrayList<Integer> tagsCheckedId =  new ArrayList<>();
-                for (int i=0; i<tagGroup_categories.getChildCount();i++){
-                    Chip chip =(Chip)tagGroup_categories.getChildAt(i);
-                    if(chip.isChecked()){
-                        tagsCheckedId.add(getIdCategory(String.valueOf(chip.getText())));
-
-                    }
-
-                }
-                //imprimo los ids de las categorias seleccionadas
-                //Toast.makeText(getApplicationContext(),String.valueOf(tagsCheckedId.toString()),Toast.LENGTH_SHORT).show();
-                //PUBLICAR PRODUCTO SIN IMAGEN
-                publishProduct();
-            }
-        });
-
-
-
-
 
 
     }
 
+
+
     @Override
     public void getCategories(ArrayList<Category> categories) {
-
         //ShowCategories
         LayoutInflater  inflaterCategories = LayoutInflater.from(ProductFormActivity.this);
         for(Category category : categories){
@@ -296,6 +272,7 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
                     Integer.valueOf((int) this.pickerHeigth.getLeftSeekBar().getProgress()),
                     Integer.valueOf((int) this.pickerWeigth.getLeftSeekBar().getProgress()),
                     Integer.valueOf((int) this.pickerLarge.getLeftSeekBar().getProgress()));
+
             Product product = new Product(
                     Double.valueOf(this.price.getText().toString()),
                     this.name.getText().toString(),
@@ -312,13 +289,12 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
                     location,
                     null);
 
-            Toast.makeText(getApplicationContext(),this.getCityName(),Toast.LENGTH_SHORT).show();
-            this.presenter.publishProduct(product,getUrisPhotos());
-       // }else{
-        ///   Toast.makeText(getApplicationContext(),"complete el formulario",Toast.LENGTH_LONG).show();
+            this.presenter.publishProduct(product,getUrisPhotos(),this.categories);
+        //}else {
+          //  Toast.makeText(getApplicationContext(), "complete el formulario", Toast.LENGTH_LONG).show();
 
-        //}
-    }
+           // }
+        }
 
     public String getCurrentUTC(){
 
@@ -331,7 +307,8 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
 
     @Override
     public void publishProductResponse(ProductResponse productResponse) {
-        Toast.makeText(getApplicationContext(),String.valueOf(productResponse.getId()),Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
 
@@ -425,6 +402,9 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
 
     public void loadingImage(View view) {
 
+        requestPermission();
+
+
         Options options = Options.init()
                 .setRequestCode(100)
                 .setCount(10)
@@ -435,6 +415,8 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
                 .setPath("/rappiGarage/images");
         options.setPreSelectedUrls(urisPhotos);
         Pix.start(ProductFormActivity.this, options);
+
+
 
     }
 
@@ -488,5 +470,19 @@ public class ProductFormActivity extends AppCompatActivity implements IProductFo
     }
 
 
+    public void publishProductClick(View view) {
 
+        //tagsCheckedId contiene los id de las etiquetas que selecciono
+        ArrayList<Integer> tagsCheckedId =  new ArrayList<>();
+        for (int i=0; i<tagGroup_categories.getChildCount();i++){
+            Chip chip =(Chip)tagGroup_categories.getChildAt(i);
+            if(chip.isChecked()){
+                tagsCheckedId.add(getIdCategory(String.valueOf(chip.getText())));
+                categories.add(getIdCategory(String.valueOf(chip.getText())));
+            }
+
+        }
+        //imprimo los ids de las categorias seleccionadas
+        publishProduct();
+    }
 }

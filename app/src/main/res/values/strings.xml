@@ -11,18 +11,22 @@
     <string name="description">Descripción</string>
     <string name="Qdescription">¿Qué estás ofreciendo?</string>
     <string name="location">Ubicación del artículo*</string>
+    <string name="locationLabel">Ubicación: </string>
     <string name="availableQuantity">Cantidad*</string>
     <string name="warranty">Garantía*</string>
+    <string name="warrantyLabel">de garantía </string>
     <string name="condition">Condición*</string>
     <string name="Pnew">Nuevo</string>
     <string name="Pused">Usado</string>
     <string name="categories">Categorías*</string>
+    <string name="categoriesLabel">Categorías: </string>
     <string name="measures">Medidas*</string>
     <string name="width">Ancho(cm)</string>
     <string name="heigth">Alto(cm)</string>
     <string name="large">Largo(cm)</string>
     <string name="weigth">Peso(kg)</string>
     <string name="publish">Publicar</string>
+    <string name="publishLabel">Publicado El: </string>
     <string name="home">Inicio</string>
     <string name="notification">Notificaciones</string>
     <string name="profile">Perfil</string>
@@ -31,4 +35,12 @@
     <string name="moda">Moda</string>
     <string name="search">Buscar</string>
     <string name="filtres">Filtros</string>
+    <string name="productName">Nombre de Producto</string>
+    <string name="productDetail">Detalle del producto</string>
+    <string name="quiantity">Unidades disponibles </string>
+    <string name="productDescription">Product Description</string>
+    <string name="productDescriptionLabel">Descripción</string>
+    <string name="userName">User Name</string>
+    <string name="buyButton">Comprar</string>
+
 </resources>
