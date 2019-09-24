@@ -27,12 +27,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
-        <activity android:name=".Product.Detail.ProductDetailActivity">
-
+        <activity android:name=".SplashIntro">
         </activity>
-
+        <activity android:name=".Product.Detail.ProductDetailActivity">
+        </activity>
         <activity android:name=".Product.Publish.ProductFormActivity" />
         <activity android:name=".MainActivity" />
 
