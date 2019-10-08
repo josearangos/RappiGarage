@@ -45,8 +45,6 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImagesView
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Toast.makeText(context,  horizontalImgList.get(position)+" is selected" , Toast.LENGTH_SHORT).show();
                 horizontalImgList.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, horizontalImgList.size());

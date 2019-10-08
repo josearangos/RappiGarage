@@ -3,11 +3,14 @@ package co.edu.udea.rappigarage_android;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.Animator;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
-
+import co.edu.udea.rappigarage_android.User.Login;
 import com.airbnb.lottie.LottieAnimationView;
 
 public class SplashIntro extends AppCompatActivity {
@@ -19,7 +22,7 @@ public class SplashIntro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_intro);
         introrappi = findViewById(R.id.introrappi);
-        intent = new Intent(this,MainActivity.class);
+        intent = new Intent(this,Login.class);
     }
 
     @Override
@@ -34,8 +37,17 @@ public class SplashIntro extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                startActivity(intent);
-                finish();
+
+                final SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.namePreference), Context.MODE_PRIVATE);
+
+                if(sharedPreferences.getString("token",null) != null){
+                    Intent myintent = new Intent(SplashIntro.this,MainActivity.class);
+                    startActivity(myintent);
+                    finish();
+                }else {
+                    startActivity(intent);
+                    finish();
+                }
             }
 
             @Override

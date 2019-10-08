@@ -26,6 +26,22 @@ public class ProductSummaryAdapter extends RecyclerView.Adapter<ProductSummaryAd
     private List<Search> productSummaries;
     private Context context;
 
+    public List<Search> getProductSummaries() {
+        return productSummaries;
+    }
+
+    public void setProductSummaries(List<Search> productSummaries) {
+        this.productSummaries = productSummaries;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
     public ProductSummaryAdapter(List<Search> productSummaries, Context context) {
         this.productSummaries = productSummaries;
         this.context = context;
@@ -46,7 +62,7 @@ public class ProductSummaryAdapter extends RecyclerView.Adapter<ProductSummaryAd
                 holder.imageProduct.setImageURI(uri);
             }
             holder.title.setText(productSummaries.get(position).getName());
-            holder.price.setText(String.valueOf(productSummaries.get(position).getPrice()));
+            holder.price.setText("$"+String.valueOf(productSummaries.get(position).getPrice()));
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
