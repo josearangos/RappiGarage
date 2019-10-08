@@ -6,6 +6,7 @@
     <string name="productForm">Publicar artículo</string>
     <string name="price">Precio*</string>
     <string name="detail">Detalles*</string>
+    <string name="namePreference">User.Login</string>
     <string name="name">Nombre</string>
     <string name="title">Título del artículo</string>
     <string name="description">Descripción</string>

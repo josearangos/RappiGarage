@@ -55,7 +55,6 @@ public class Login extends AppCompatActivity {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("token", token.getToken());
                     editor.apply();
-
                     // Go to Main Activity
                     Intent intent = new Intent(Login.this, MainActivity.class);
                     startActivity(intent);

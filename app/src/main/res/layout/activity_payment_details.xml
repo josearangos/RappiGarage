@@ -9,7 +9,22 @@
     tools:context=".Product.Detail.PayPal.PaymentDetails">
 
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_gravity="end"
+        app:lottie_rawRes="@raw/factura"
+        android:visibility="visible"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="false"
+        android:id="@+id/factura"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        tools:ignore="MissingConstraints" />
+
+
+
     <TextView
+        android:visibility="gone"
         android:layout_margin="10dp"
         android:id="@+id/id"
         android:layout_width="match_parent"
@@ -17,6 +32,7 @@
         android:text="TextView" />
 
     <TextView
+        android:visibility="gone"
         android:layout_margin="10dp"
         android:id="@+id/state"
         android:layout_width="match_parent"
@@ -25,6 +41,7 @@
 
 
     <TextView
+        android:visibility="gone"
         android:layout_margin="10dp"
         android:id="@+id/amount"
         android:layout_width="match_parent"

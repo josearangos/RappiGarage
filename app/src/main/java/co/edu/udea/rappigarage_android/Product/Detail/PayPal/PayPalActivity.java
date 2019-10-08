@@ -72,8 +72,6 @@ public class PayPalActivity extends AppCompatActivity {
         Intent intent = new Intent(this,PayPalService.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,config);
         startService(intent);
-
-
         processPayment();
 
 
@@ -93,6 +91,7 @@ public class PayPalActivity extends AppCompatActivity {
                                .putExtra("price",getPrice())
                                .putExtra("title",getTitleP())
                                .putExtra("paymentDetails",paymentDetails));
+                       finish();
                    } catch (JSONException e) {
                        e.printStackTrace();
                    }
@@ -117,8 +116,6 @@ public class PayPalActivity extends AppCompatActivity {
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
         intent.putExtra(PaymentActivity.EXTRA_PAYMENT,payPalPayment);
         startActivityForResult(intent,PAYPAL_REQUEST_CODE);
-
-
     }
 
 
