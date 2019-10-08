@@ -1,7 +1,7 @@
 # RappiGarage
 
 ## Flujo completo
-![](flujoCompleto-login-pago)
+![](flujoCompleto-login-pago.gif)
 
 ## Busqueda
 ![](RappiGarageBusqueda.gif)
