@@ -10,6 +10,7 @@
 
 
     <HorizontalScrollView
+        android:visibility="invisible"
         android:layout_alignParentTop="true"
         android:id="@+id/categoriesLayout"
         android:layout_weight="0.1"

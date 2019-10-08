@@ -9,6 +9,7 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.jackandphantom.circularimageview.RoundedImage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ import co.edu.udea.rappigarage_android.GlobalServices.Category.Category;
 import co.edu.udea.rappigarage_android.Product.Detail.API.CategoriesProductResponse;
 import co.edu.udea.rappigarage_android.Product.Detail.API.IProductDetailService;
 import co.edu.udea.rappigarage_android.Product.Detail.API.IProductSellerService;
+import co.edu.udea.rappigarage_android.Product.Detail.PayPal.PayPalActivity;
 import co.edu.udea.rappigarage_android.Product.Publish.API.PhotoSource;
 import co.edu.udea.rappigarage_android.Product.Publish.API.Product;
 import co.edu.udea.rappigarage_android.Product.Publish.IProductForm;
@@ -249,6 +251,10 @@ public class ProductDetailActivity extends AppCompatActivity implements IProduct
     }
 
 
-
-
+    public void but(View view) {
+        Intent intent = new Intent(this, PayPalActivity.class);
+        intent.putExtra("price",String.valueOf(price.getText()));
+        intent.putExtra("title",String.valueOf(productName.getText()));
+        startActivity(intent);
+    }
 }
